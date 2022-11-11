@@ -26,15 +26,15 @@ public class LogInPage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    public void fillInLogin() {
+    public void fillInLogin(String login) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(appleIDTextFieldPath)).clear();
-        driver.findElement(appleIDTextFieldPath).sendKeys("geckoowlet2@gmail.com");
+        driver.findElement(appleIDTextFieldPath).sendKeys(login);
         driver.findElement(nextBtnPath).click();
     }
 
-    public void fillInPassword() {
+    public void fillInPassword(String password) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(passwordTextFieldPath)).clear();
-        driver.findElement(passwordTextFieldPath).sendKeys("Hampshire@123");
+        driver.findElement(passwordTextFieldPath).sendKeys(password);
         wait.until(ExpectedConditions.visibilityOfElementLocated(nextBtnPath)).click();
     }
 
@@ -47,10 +47,10 @@ public class LogInPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(dontUpgradeBtnPath)).click();
     }
 
-    public void login() {
+    public void login(String login, String password) {
         driver.switchTo().frame(wait.until(ExpectedConditions.visibilityOfElementLocated(widgetIFramePath)));
-        fillInLogin();
-        fillInPassword();
+        fillInLogin(login);
+        fillInPassword(password);
         clickOtherOptionBtn();
         clickDontUpgradeBtn();
     }
