@@ -7,4 +7,11 @@ Feature: The User login test
     Then I fill Login and password
 
 
+  Scenario: Browse page - Verification of Links are functional
+
+    Given I am on the Home page
+    When I am on the Browse page
+    When I am click Name
+
+
 
