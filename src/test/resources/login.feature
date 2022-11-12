@@ -9,18 +9,30 @@ Feature: The User login test
     And Browse button is displayed
     And Search button is displayed
     And Ask the Community button is displayed
+    And Post User Tip button is not displayed
+    Then Lounge button is not displayed
+    Then Ask Question
+    Then Try Access Lounge Announcements With Link
+
+
 
 
   Scenario: Verify options on home page for logged in L5 external user
 
     Given I am on the Home page
     When I am on the Login page
-    Then I fill L5 Login and password
+    And I fill L5 Login and password
     And My Subscriptions button is displayed
     And Browse button is displayed
     And Search button is displayed
     And Ask the Community button is displayed
     And Post User Tip button is displayed
+    And Lounge button is not displayed
+    Then Ask Question
+    And Create Tip
+    Then Try Access Lounge Announcements With Link
+
+
 
   Scenario: Verify options on home page for logged in L6 external user
 
@@ -33,6 +45,10 @@ Feature: The User login test
     And Ask the Community button is displayed
     And Post User Tip button is displayed
     And Lounge button is displayed
+    Then Ask Question
+    And Create Tip
+    Then Access Lounge Announcements
+
 
 
   Scenario: Browse page - Verification of Links are functional

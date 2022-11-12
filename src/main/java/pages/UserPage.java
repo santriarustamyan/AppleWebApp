@@ -16,14 +16,15 @@ public class UserPage {
     private final By browseBtnPath = By.cssSelector("[data-cy='cy-browse']");
     private final By searchBtnPath = By.cssSelector("[data-cy='cy-search']");
     private final By mySubscriptionsBtnPath = By.cssSelector("[data-cy='My Subscriptions']");
-    private final By loungeBtnPath = By.xpath("//span[@class='localnav-menu-item rollout-menu-title'][normalize-space()='Lounge']");
+    private final By loungeLibelPath = By.xpath("//span[@class='localnav-menu-item rollout-menu-title'][normalize-space()='Lounge']");
     private final By profileBtn = By.cssSelector("[class='profile']");
     private final By moreBtn = By.cssSelector("[class='localnav-menu-link icon icon-after icon-chevrondown']");
-
+    private final By loungeBtnPath = By.xpath("//div[@class='rollout-column']//a[@class='localnav-menu-link'][normalize-space()='Lounge Announcements']");
 
     public UserPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
     }
 
     public boolean mySubscriptionsBtnIsDisplayed() {
@@ -39,17 +40,40 @@ public class UserPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(searchBtnPath)).isDisplayed();
     }
 
+    public void clickAskTheCommunityBtn() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(askTheCommunityBtnPath)).click();
+    }
+
     public boolean askTheCommunityBtnIsDisplayed() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(askTheCommunityBtnPath)).isDisplayed();
     }
 
-    public boolean createTipBtnIsDisplayed() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(createTipBtnPath)).isDisplayed();
+    public void clickCreateTipBtn() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(createTipBtnPath)).click();
     }
 
-    public boolean loungeBtnIsDisplayed() {
+    public boolean createTipBtnIsDisplayed() {
+        try {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(createTipBtnPath)).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean loungeLibelIsDisplayed() {
+        try {
+            driver.findElement(moreBtn).click();
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(loungeLibelPath)).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void clickLoungeBtn() {
         driver.findElement(moreBtn).click();
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(loungeBtnPath)).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(loungeBtnPath)).click();
     }
 
 }
+
+

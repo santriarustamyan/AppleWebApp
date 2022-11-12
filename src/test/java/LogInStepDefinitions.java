@@ -6,10 +6,8 @@ import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.BrowsPage;
-import pages.HomePage;
-import pages.LogInPage;
-import pages.UserPage;
+import pages.*;
+
 
 public class LogInStepDefinitions {
 
@@ -18,6 +16,10 @@ public class LogInStepDefinitions {
     LogInPage logInPage;
     BrowsPage browsPage;
     UserPage userPage;
+    AskTheCommunityPage askTheCommunityPage;
+    CreateTipPage createTipPage;
+    Requests requests;
+
 
 
     @Given("I am on the Home page")
@@ -30,7 +32,9 @@ public class LogInStepDefinitions {
         logInPage = new LogInPage(driver);
         browsPage = new BrowsPage(driver);
         userPage = new UserPage(driver);
-
+        askTheCommunityPage = new AskTheCommunityPage(driver);
+        createTipPage = new CreateTipPage(driver);
+        requests = new Requests();
     }
 
     @When("I am on the Login page")
@@ -63,7 +67,6 @@ public class LogInStepDefinitions {
         browsPage.clickThreadLink();
     }
 
-
     @Then("My Subscriptions button is displayed")
     public void my_subscriptions_button_is_displayed() {
         Assert.isTrue(userPage.mySubscriptionsBtnIsDisplayed(), "My Subscriptions button is not displayed");
@@ -89,11 +92,45 @@ public class LogInStepDefinitions {
         Assert.isTrue(userPage.createTipBtnIsDisplayed(), "Post User Tip button is not displayed");
     }
 
-    @Then("Lounge button is displayed")
-    public void lounge_button_is_displayed() {
-        Assert.isTrue(userPage.loungeBtnIsDisplayed(), "Lounge button is not displayed");
+    @Then("Post User Tip button is not displayed")
+    public void post_user_tip_button_is_not_displayed() {
+        Assert.isTrue(!userPage.createTipBtnIsDisplayed(), "Post User Tip button is displayed");
     }
 
+    @Then("Lounge button is displayed")
+    public void lounge_button_is_displayed() {
+        Assert.isTrue(userPage.loungeLibelIsDisplayed(), "Lounge button is not displayed");
+    }
+
+    @Then("Lounge button is not displayed")
+    public void lounge_button_is_not_displayed() {
+        Assert.isTrue(!userPage.loungeLibelIsDisplayed(), "Lounge button is displayed");
+    }
+
+
+    @Then("Ask Question")
+    public void askQuestion() {
+        userPage.clickAskTheCommunityBtn();
+        askTheCommunityPage.createQuestion();
+    }
+
+
+    @Then("Create Tip")
+    public void createTip(){
+        userPage.clickCreateTipBtn();
+        createTipPage.createTip();
+    }
+
+    @Then("Access Lounge Announcements")
+    public void goLoungeAnnouncements(){
+        userPage.clickLoungeBtn();
+    }
+
+    @Then("Try Access Lounge Announcements With Link")
+    public void TryFindLoungeAnnouncementsWithLink(){
+        int statusCode = requests.getStatusCode("https://discussions.apple.com/community/lounge/announcements");
+        Assert.isTrue(statusCode == 404,"Page is accessible");
+    }
 
     @After
     public void tearDown() {
