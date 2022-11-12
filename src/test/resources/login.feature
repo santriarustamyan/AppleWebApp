@@ -11,10 +11,8 @@ Feature: The User login test
     And Ask the Community button is displayed
     And Post User Tip button is not displayed
     Then Lounge button is not displayed
-    Then Ask Question
+#    Then Ask Question
     Then Try Access Lounge Announcements With Link
-
-
 
 
   Scenario: Verify options on home page for logged in L5 external user
@@ -28,10 +26,9 @@ Feature: The User login test
     And Ask the Community button is displayed
     And Post User Tip button is displayed
     And Lounge button is not displayed
-    Then Ask Question
-    And Create Tip
+#    Then Ask Question
+#    And Create Tip
     Then Try Access Lounge Announcements With Link
-
 
 
   Scenario: Verify options on home page for logged in L6 external user
@@ -45,10 +42,9 @@ Feature: The User login test
     And Ask the Community button is displayed
     And Post User Tip button is displayed
     And Lounge button is displayed
-    Then Ask Question
-    And Create Tip
+#    Then Ask Question
+#    And Create Tip
     Then Access Lounge Announcements
-
 
 
   Scenario: Browse page - Verification of Links are functional
@@ -56,6 +52,5 @@ Feature: The User login test
     Given I am on the Home page
     When I am on the Browse page
     When I click Name
-
 
 

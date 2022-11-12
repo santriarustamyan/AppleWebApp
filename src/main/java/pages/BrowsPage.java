@@ -8,17 +8,13 @@ public class BrowsPage {
 
     private final By threadNamePath = By.cssSelector("[class='topic-title-link '][data-analytics-index='0']");
 
-
-    public BrowsPage(WebDriver driver){
+    public BrowsPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void clickThreadLink(){
+    public void clickThreadLink() {
         String a = driver.findElement(threadNamePath).getText();
         driver.findElement(threadNamePath).click();
-    }
-    public String getThreadName(){
-        return driver.findElement(threadNamePath).getText();
     }
 
 }

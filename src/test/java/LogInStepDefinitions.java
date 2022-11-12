@@ -1,5 +1,6 @@
 import dev.failsafe.internal.util.Assert;
 import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -22,12 +23,17 @@ public class LogInStepDefinitions {
 
 
 
-    @Given("I am on the Home page")
-    public void goHomePage() {
+    @Before
+    public void goHomePages() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://discussions.apple.com/welcome");
         driver.manage().window().maximize();
+
+    }
+
+    @Given("I am on the Home page")
+    public void goHomePage() {
         homePage = new HomePage(driver);
         logInPage = new LogInPage(driver);
         browsPage = new BrowsPage(driver);
@@ -44,7 +50,7 @@ public class LogInStepDefinitions {
 
     @Then("I fill L Login and password")
     public void fillLUserData() {
-        logInPage.login("apple.asc002+100@gmail.com", "Hampshire@123");
+        logInPage.login("johnaug2017@outlook.com", "Password@12");
     }
 
     @Then("I fill L5 Login and password")
@@ -108,18 +114,18 @@ public class LogInStepDefinitions {
     }
 
 
-    @Then("Ask Question")
-    public void askQuestion() {
-        userPage.clickAskTheCommunityBtn();
-        askTheCommunityPage.createQuestion();
-    }
+//    @Then("Ask Question")
+//    public void askQuestion() {
+//        userPage.clickAskTheCommunityBtn();
+//        askTheCommunityPage.createQuestion();
+//    }
 
 
-    @Then("Create Tip")
-    public void createTip(){
-        userPage.clickCreateTipBtn();
-        createTipPage.createTip();
-    }
+//    @Then("Create Tip")
+//    public void createTip(){
+//        userPage.clickCreateTipBtn();
+//        createTipPage.createTip();
+//    }
 
     @Then("Access Lounge Announcements")
     public void goLoungeAnnouncements(){
