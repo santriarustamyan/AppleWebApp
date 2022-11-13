@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.*;
 
-
 public class LogInStepDefinitions {
 
     WebDriver driver;
@@ -20,7 +19,7 @@ public class LogInStepDefinitions {
     AskTheCommunityPage askTheCommunityPage;
     CreateTipPage createTipPage;
     Requests requests;
-
+    ThreadPage threadPage;
 
 
     @Before
@@ -41,6 +40,7 @@ public class LogInStepDefinitions {
         askTheCommunityPage = new AskTheCommunityPage(driver);
         createTipPage = new CreateTipPage(driver);
         requests = new Requests();
+        threadPage = new ThreadPage(driver);
     }
 
     @When("I am on the Login page")
@@ -68,9 +68,13 @@ public class LogInStepDefinitions {
         homePage.clickBtnBrows();
     }
 
-    @When("I click Name")
-    public void goThread() {
-        browsPage.clickThreadLink();
+    @When("Links should be functional")
+    public void goThreadPage() {
+        String threadName = browsPage.getThreadName();
+
+        browsPage.clickThreadLinkAndSwitchTab();
+
+        Assert.isTrue(threadName.equals(threadPage.getThreadName()), "Link is not working");
     }
 
     @Then("My Subscriptions button is displayed")
@@ -128,14 +132,34 @@ public class LogInStepDefinitions {
 //    }
 
     @Then("Access Lounge Announcements")
-    public void goLoungeAnnouncements(){
+    public void goLoungeAnnouncements() {
         userPage.clickLoungeBtn();
     }
 
     @Then("Try Access Lounge Announcements With Link")
-    public void TryFindLoungeAnnouncementsWithLink(){
+    public void TryFindLoungeAnnouncementsWithLink() {
         int statusCode = requests.getStatusCode("https://discussions.apple.com/community/lounge/announcements");
-        Assert.isTrue(statusCode == 404,"Page is accessible");
+        Assert.isTrue(statusCode == 404, "Page is accessible");
+    }
+
+    @Then("Per pages 20 should be functional")
+    public void check20PerPage() {
+        browsPage.checkPerPageButton("20");
+    }
+
+    @Then("Per pages 60 should be functional")
+    public void check60PerPage() {
+        browsPage.checkPerPageButton("60");
+    }
+
+    @Then("Try Access User Tip With Link")
+    public void TryFindUserTipWithLink() {
+        driver.get("https://discussions.apple.com/post/userTip");
+
+        String expectedTitle = "Error - Access Denied - Apple Community";
+        String currentTitle = driver.getTitle();
+
+        Assert.isTrue(currentTitle.equals(expectedTitle), "Page is accessible");
     }
 
     @After

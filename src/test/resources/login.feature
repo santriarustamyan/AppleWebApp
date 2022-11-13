@@ -13,6 +13,7 @@ Feature: The User login test
     Then Lounge button is not displayed
 #    Then Ask Question
     Then Try Access Lounge Announcements With Link
+    And Try Access User Tip With Link
 
 
   Scenario: Verify options on home page for logged in L5 external user
@@ -51,6 +52,15 @@ Feature: The User login test
 
     Given I am on the Home page
     When I am on the Browse page
-    When I click Name
+    Then Links should be functional
+
+
+  Scenario: Browse page - Verification of Ability to select 20 or 60 items per page
+    Given I am on the Home page
+    When I am on the Browse page
+    And Per pages 20 should be functional
+    Then Per pages 60 should be functional
+
+
 
 
