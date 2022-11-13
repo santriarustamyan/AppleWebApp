@@ -17,7 +17,6 @@ public class LogInPage {
     private final By nextBtnPath = By.cssSelector("[class='shared-icon icon_sign_in']");
     private final By otherOptionsBtnPath = By.cssSelector("[class='button button-secondary first  nav-cancel pull-right']");
     private final By dontUpgradeBtnPath = By.cssSelector("[class='button button-secondary first  nav-cancel pull-right']");
-
     private final By widgetIFramePath = By.id("aid-auth-widget-iFrame");
     private final By repairFramePath = By.id("repairFrame");
 

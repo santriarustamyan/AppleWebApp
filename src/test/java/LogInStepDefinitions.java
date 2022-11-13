@@ -158,14 +158,24 @@ public class LogInStepDefinitions {
         Assert.isTrue(statusCode == 404, "Page is accessible");
     }
 
-    @Then("Per pages 20 should be functional")
-    public void check20PerPage() {
+    @Then("Per pages 20 should be functional in Browse page")
+    public void check20PerPageBrowse() {
         browsPage.checkPerPageButton("20");
     }
 
-    @Then("Per pages 60 should be functional")
-    public void check60PerPage() {
+    @Then("Per pages 60 should be functional in Browse page")
+    public void check60PerPageBrowse() {
         browsPage.checkPerPageButton("60");
+    }
+
+    @Then("Per pages 20 should be functional in My Subscriptions")
+    public void check20PerPageMySubscriptions() {
+        mySubscriptionsPage.checkPerPageButton("20");
+    }
+
+    @Then("Per pages 60 should be functional in My Subscriptions")
+    public void check60PerPageMySubscriptions() {
+        mySubscriptionsPage.checkPerPageButton("60");
     }
 
     @Then("Try Access User Tip With Link")

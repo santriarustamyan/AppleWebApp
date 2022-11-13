@@ -18,8 +18,6 @@ public class BrowsPage {
         return By.cssSelector("[aria-label='" + pageCount + " per page']");
     }
 
-    private String activeCountPerPagePath = "per-page-count active-per-page";
-
     public BrowsPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -43,6 +41,7 @@ public class BrowsPage {
         driver.navigate().to("https://discussions.apple.com/browse/?page=1&perPage=" + count);
 
         String getAttributeName = wait.until(ExpectedConditions.visibilityOfElementLocated(pagePerBtnPath(count))).getAttribute("class");
+        String activeCountPerPagePath = "per-page-count active-per-page";
         Assert.isTrue(getAttributeName.equals(activeCountPerPagePath), "per page button no active");
     }
 

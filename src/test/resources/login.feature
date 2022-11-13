@@ -58,8 +58,8 @@ Feature: The User login test
   Scenario: Browse page - Verification of Ability to select 20 or 60 items per page
     Given I am on the Home page
     When I am on the Browse page
-    And Per pages 20 should be functional
-    Then Per pages 60 should be functional
+    And Per pages 20 should be functional in Browse page
+    Then Per pages 60 should be functional in Browse page
 
 
   Scenario: My Subscriptions page - Verification of Links are functional
@@ -71,3 +71,11 @@ Feature: The User login test
     And Profile link is a functional
 
 
+  Scenario: My Subscriptions page - Verification of Ability to select 20 or 60 items per page
+
+    Given I am on the Home page
+    When I am on the Login page
+    And I fill L Login and password
+    Then Go in My Subscriptions
+    And Per pages 20 should be functional in My Subscriptions
+    Then Per pages 60 should be functional in My Subscriptions
