@@ -62,5 +62,12 @@ Feature: The User login test
     Then Per pages 60 should be functional
 
 
+  Scenario: My Subscriptions page - Verification of Links are functional
+
+    Given I am on the Home page
+    When I am on the Login page
+    And I fill L Login and password
+    Then Go in My Subscriptions
+    And Profile link is a functional
 
 

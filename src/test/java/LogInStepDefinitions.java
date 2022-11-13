@@ -20,6 +20,8 @@ public class LogInStepDefinitions {
     CreateTipPage createTipPage;
     Requests requests;
     ThreadPage threadPage;
+    MySubscriptionsPage mySubscriptionsPage;
+    ProfilePage profilePage;
 
 
     @Before
@@ -41,6 +43,8 @@ public class LogInStepDefinitions {
         createTipPage = new CreateTipPage(driver);
         requests = new Requests();
         threadPage = new ThreadPage(driver);
+        mySubscriptionsPage = new MySubscriptionsPage(driver);
+        profilePage = new ProfilePage(driver);
     }
 
     @When("I am on the Login page")
@@ -82,6 +86,20 @@ public class LogInStepDefinitions {
         Assert.isTrue(userPage.mySubscriptionsBtnIsDisplayed(), "My Subscriptions button is not displayed");
     }
 
+    @Then("Go in My Subscriptions")
+    public void clickMySubscriptionsButton() {
+        userPage.clickMySubscriptionsBtn();
+    }
+
+    @Then("Profile link is a functional")
+    public void profileLinkFunctional() {
+        String profileName = mySubscriptionsPage.getProfileName();
+        mySubscriptionsPage.clickFirstProfileLink();
+        String profilePageName = profilePage.getProfileName();
+
+        Assert.isTrue(profileName.equals(profilePageName), "Profile link is not functional");
+    }
+
     @Then("Browse button is displayed")
     public void browse_button_is_displayed() {
         Assert.isTrue(userPage.browseBtnIsDisplayed(), "Browse button is not displayed");
@@ -117,13 +135,11 @@ public class LogInStepDefinitions {
         Assert.isTrue(!userPage.loungeLibelIsDisplayed(), "Lounge button is displayed");
     }
 
-
 //    @Then("Ask Question")
 //    public void askQuestion() {
 //        userPage.clickAskTheCommunityBtn();
 //        askTheCommunityPage.createQuestion();
 //    }
-
 
 //    @Then("Create Tip")
 //    public void createTip(){

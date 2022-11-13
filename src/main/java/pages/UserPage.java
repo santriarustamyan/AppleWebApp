@@ -32,6 +32,11 @@ public class UserPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(mySubscriptionsBtnPath)).isDisplayed();
     }
 
+    public void clickMySubscriptionsBtn() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(profileBtn)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(mySubscriptionsBtnPath)).click();
+    }
+
     public boolean browseBtnIsDisplayed() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(browseBtnPath)).isDisplayed();
     }
