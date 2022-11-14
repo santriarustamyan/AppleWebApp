@@ -22,6 +22,7 @@ public class LogInStepDefinitions {
     ThreadPage threadPage;
     MySubscriptionsPage mySubscriptionsPage;
     ProfilePage profilePage;
+    SearchPage searchPage;
 
 
     @Before
@@ -45,6 +46,7 @@ public class LogInStepDefinitions {
         threadPage = new ThreadPage(driver);
         mySubscriptionsPage = new MySubscriptionsPage(driver);
         profilePage = new ProfilePage(driver);
+        searchPage = new SearchPage(driver);
     }
 
     @When("I am on the Login page")
@@ -72,12 +74,67 @@ public class LogInStepDefinitions {
         homePage.clickBtnBrows();
     }
 
+    @When("I am on the Search page")
+    public void goSearchPage() throws InterruptedException {
+        homePage.clickBtnSearch();
+        searchPage.setSearchText();
+        searchPage.clickSearchBtn();
+        searchPage.clickFilterBtn();
+    }
+
+    @Then("Discussions -> Solved -> iPhone -> verify results")
+    public void clickIPhoneVerifyResult() throws InterruptedException {
+        String expectedNameOfSearching = "\"Discussions\", \"Solved questions\" and \"iPhone\"";
+        searchPage.clickDiscussionsBtn();
+        searchPage.clickSolvedBtn();
+        searchPage.clickIPhoneBtn();
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont working right");
+    }
+
+    @Then("Discussions -> UnSolved -> iPad -> verify results")
+    public void clickIPadVerifyResult() throws InterruptedException {
+        String expectedNameOfSearching = "\"Discussions\", \"Unsolved questions\" and \"iPad\"";
+        Thread.sleep(4000);
+        searchPage.clickDiscussionsBtn();
+        searchPage.clickUnSolvedBtn();
+        searchPage.clickIpadBtn();
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
+    }
+
+    @Then("UserTips -> AppleWatch -> verify results")
+    public void clickAppleWatchVerifyResult() throws InterruptedException {
+        String expectedNameOfSearching = "\"User Tips\" and \"Apple Watch\"";
+        searchPage.clickUserTipBtn();
+        searchPage.clickAppleWatchBtn();
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
+    }
+
+    @Then("People -> verify results")
+    public void clickPeopleVerifyResult() {
+        String expectedNameOfSearching = "\"People\"";
+        searchPage.clickPeopleBtn();
+        searchPage.peopleAvatar();
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Step click People dont work right");
+    }
+
+    @Then("Author -> verify results")
+    public void clickAuthorVerifyResult() {
+        searchPage.clickDiscussionsBtn();
+        searchPage.clickAuthorBtn();
+        Assert.isTrue(searchPage.searchByAuthorBtnIsVisible(), "Step click Author dont work right");
+    }
+
+    @Then("Time -> verify results")
+    public void clickTimeVerifyResult() {
+        String expectedNameOfSearching = "\"Discussions\" and \"Last day\"";
+        searchPage.clickTimeBtn();
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
+    }
+
     @When("Links should be functional")
     public void goThreadPage() {
         String threadName = browsPage.getThreadName();
-
         browsPage.clickThreadLinkAndSwitchTab();
-
         Assert.isTrue(threadName.equals(threadPage.getThreadName()), "Link is not working");
     }
 
@@ -96,7 +153,6 @@ public class LogInStepDefinitions {
         String profileName = mySubscriptionsPage.getProfileName();
         mySubscriptionsPage.clickFirstProfileLink();
         String profilePageName = profilePage.getProfileName();
-
         Assert.isTrue(profileName.equals(profilePageName), "Profile link is not functional");
     }
 

@@ -79,3 +79,14 @@ Feature: The User login test
     Then Go in My Subscriptions
     And Per pages 20 should be functional in My Subscriptions
     Then Per pages 60 should be functional in My Subscriptions
+
+  Scenario:  Go to Search page and search for any query and check whether Filters work
+
+    Given I am on the Home page
+    When I am on the Search page
+    And Discussions -> Solved -> iPhone -> verify results
+    And Discussions -> UnSolved -> iPad -> verify results
+    And UserTips -> AppleWatch -> verify results
+    And People -> verify results
+    And Author -> verify results
+    And Time -> verify results
