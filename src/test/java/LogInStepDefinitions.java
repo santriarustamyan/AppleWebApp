@@ -1,6 +1,7 @@
 import dev.failsafe.internal.util.Assert;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -79,8 +80,13 @@ public class LogInStepDefinitions {
         homePage.clickBtnSearch();
         searchPage.setSearchText();
         searchPage.clickSearchBtn();
+    }
+
+    @When("Go Filter page")
+    public void goFilterPage()  {
         searchPage.clickFilterBtn();
     }
+
 
     @Then("Discussions -> Solved -> iPhone -> verify results")
     public void clickIPhoneVerifyResult() throws InterruptedException {
@@ -242,6 +248,28 @@ public class LogInStepDefinitions {
         String currentTitle = driver.getTitle();
 
         Assert.isTrue(currentTitle.equals(expectedTitle), "Page is accessible");
+    }
+
+    @And("I go next page")
+    public void iGoNextPage() {
+        searchPage.clickNextBtn();
+    }
+
+    @Then("I am in page Two")
+    public void iAmInPageTwo() throws InterruptedException {
+        String pageNumberName = "Page 2";
+        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()),"Button next no working");
+    }
+
+    @And("I go previous page")
+    public void iGoPreviousPage() {
+        searchPage.clickPreviousBtn();
+    }
+
+    @Then("I am in page One")
+    public void iAmInPageOne() throws InterruptedException {
+        String pageNumberName = "Page 1";
+        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()),"Previous next no working");
     }
 
     @After

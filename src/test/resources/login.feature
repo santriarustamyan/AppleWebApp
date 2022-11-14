@@ -84,9 +84,19 @@ Feature: The User login test
 
     Given I am on the Home page
     When I am on the Search page
+    And Go Filter page
     And Discussions -> Solved -> iPhone -> verify results
     And Discussions -> UnSolved -> iPad -> verify results
     And UserTips -> AppleWatch -> verify results
     And People -> verify results
     And Author -> verify results
-    And Time -> verify results
+    Then Time -> verify results
+
+  Scenario: Search page - Verification of pagination
+
+    Given I am on the Home page
+    When I am on the Search page
+    And I go next page
+    Then I am in page Two
+    Then I go previous page
+    Then I am in page One

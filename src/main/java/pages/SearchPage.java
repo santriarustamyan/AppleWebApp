@@ -41,7 +41,11 @@ public class SearchPage {
     private final By topicHeadingPath = By.cssSelector("[class='topics-heading']");
 
     private final By peopleAvatarPath = By.cssSelector("[class='post-author-profile author-user']");
-    private final By searchByAuthorBtn = By.cssSelector("[aria-label='Search by author']");
+    private final By searchByAuthorTextFieldPath = By.cssSelector("[aria-label='Search by author']");
+
+    private final By nextBtnPath = By.cssSelector("[class='next-page icon icon-standalone icon-chevronright']");
+    private final By previousBtnPath = By.cssSelector("[class='previous-page icon icon-standalone icon-chevronleft']");
+    private final By pageNumberPath = By.cssSelector("[class='page-number']");
 
     public SearchPage(WebDriver driver) {
         this.driver = driver;
@@ -116,7 +120,7 @@ public class SearchPage {
     }
 
     public boolean searchByAuthorBtnIsVisible() {
-       return driver.findElement(searchByAuthorBtn).isDisplayed();
+        return driver.findElement(searchByAuthorTextFieldPath).isDisplayed();
     }
 
     public void clickTimeBtn() {
@@ -131,8 +135,6 @@ public class SearchPage {
         }
     }
 
-
-
     public void clickResetBtn() {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(resetBtnPath)).click();
@@ -142,6 +144,20 @@ public class SearchPage {
 
     public String getTextSearchingResult() {
         return wait.until(ExpectedConditions.elementToBeClickable(filteredByTextPath)).getText();
+    }
+
+    public void clickNextBtn() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(closePopUpAlertPath)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nextBtnPath)).click();
+    }
+
+    public String getPageNumberName() throws InterruptedException {
+        Thread.sleep(4000);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(pageNumberPath)).getText();
+    }
+
+    public void clickPreviousBtn() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(previousBtnPath)).click();
     }
 
 }
