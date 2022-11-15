@@ -45,16 +45,8 @@ public class UserPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(searchBtnPath)).isDisplayed();
     }
 
-    public void clickAskTheCommunityBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(askTheCommunityBtnPath)).click();
-    }
-
     public boolean askTheCommunityBtnIsDisplayed() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(askTheCommunityBtnPath)).isDisplayed();
-    }
-
-    public void clickCreateTipBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(createTipBtnPath)).click();
     }
 
     public boolean createTipBtnIsDisplayed() {

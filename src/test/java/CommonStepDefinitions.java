@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.*;
 
-public class LogInStepDefinitions {
+public class CommonStepDefinitions {
 
     WebDriver driver;
     HomePage homePage;
@@ -76,7 +76,7 @@ public class LogInStepDefinitions {
     }
 
     @When("I am on the Search page")
-    public void goSearchPage() throws InterruptedException {
+    public void goSearchPage() {
         homePage.clickBtnSearch();
         searchPage.setSearchText();
         searchPage.clickSearchBtn();
@@ -196,18 +196,6 @@ public class LogInStepDefinitions {
     public void lounge_button_is_not_displayed() {
         Assert.isTrue(!userPage.loungeLibelIsDisplayed(), "Lounge button is displayed");
     }
-
-//    @Then("Ask Question")
-//    public void askQuestion() {
-//        userPage.clickAskTheCommunityBtn();
-//        askTheCommunityPage.createQuestion();
-//    }
-
-//    @Then("Create Tip")
-//    public void createTip(){
-//        userPage.clickCreateTipBtn();
-//        createTipPage.createTip();
-//    }
 
     @Then("Access Lounge Announcements")
     public void goLoungeAnnouncements() {
