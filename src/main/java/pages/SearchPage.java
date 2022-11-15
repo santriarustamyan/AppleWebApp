@@ -47,27 +47,34 @@ public class SearchPage {
     private final By previousBtnPath = By.cssSelector("[class='previous-page icon icon-standalone icon-chevronleft']");
     private final By pageNumberPath = By.cssSelector("[class='page-number']");
 
+    private final By nameReplyToBtnPath = By.cssSelector("[class='topics-table-row thread']:nth-child(2) > .topics-table-row-details > article > a");
+    private final By authorNameBtn2Path = By.cssSelector("tr:nth-child(2) > td.topics-table-row-latest-activity > div > a.author");
+    private final By whereThreadInBtnPath = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > a.community-link");
+    private final By authorNameBtn1Path = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > [data-action='topic-author']");
+    private final By popupUserNamePath = By.id("user-profile-popup-title");
+    private final By popupClosePath = By.cssSelector("[class='modal-close-button']");
+
     public SearchPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     public void setSearchText() {
-        driver.findElement(searchTextFieldPath).sendKeys("Apple");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchTextFieldPath)).sendKeys("Apple");
     }
 
     public void clickSearchBtn() {
-        driver.findElement(searchBtnPath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(searchBtnPath)).click();
     }
 
     public void clickDiscussionsBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(discussionsBtnPath)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(topicHeadingPath)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(discussionsBtnPath)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath)).click();
 
     }
 
     public void clickSolvedBtn() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(closePopUpAlertPath)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(closePopUpAlertPath)).click();
 
         wait.until(ExpectedConditions.elementToBeClickable(typeBtnPath)).click();
         Thread.sleep(4000);
@@ -84,13 +91,14 @@ public class SearchPage {
     }
 
     public void clickIPhoneBtn() {
-        driver.findElement(communityBtnPath).click();
-        driver.findElement(iPhoneBtnPath).click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(communityBtnPath)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(iPhoneBtnPath)).click();
     }
 
     public void clickIpadBtn() {
-        driver.findElement(communityBtnPath).click();
-        driver.findElement(iPadBtnPath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(communityBtnPath)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(iPadBtnPath)).click();
     }
 
     public void clickUserTipBtn() {
@@ -108,24 +116,24 @@ public class SearchPage {
     }
 
     public void clickFilterBtn() {
-        driver.findElement(filterBtnPath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(filterBtnPath)).click();
     }
 
     public void clickPeopleBtn() {
-        driver.findElement(peopleBtnPath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(peopleBtnPath)).click();
     }
 
     public void clickAuthorBtn() {
-        driver.findElement(authorBtnPath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(authorBtnPath)).click();
     }
 
     public boolean searchByAuthorBtnIsVisible() {
-        return driver.findElement(searchByAuthorTextFieldPath).isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(searchByAuthorTextFieldPath)).isDisplayed();
     }
 
     public void clickTimeBtn() {
-        driver.findElement(timeBtnPath).click();
-        driver.findElement(dayBtnPath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(timeBtnPath)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(dayBtnPath)).click();
     }
 
     public void peopleAvatar() {
@@ -158,6 +166,46 @@ public class SearchPage {
 
     public void clickPreviousBtn() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(previousBtnPath)).click();
+    }
+
+    public void clickReplyToBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(nameReplyToBtnPath)).click();
+    }
+
+    public String getReplyToBtnName() {
+        return wait.until(ExpectedConditions.elementToBeClickable(nameReplyToBtnPath)).getText();
+    }
+
+    public void clickAuthorNameBtn1() {
+        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).click();
+    }
+
+    public String getAuthorNameBtn1() {
+        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).getText();
+    }
+
+    public String getPopupUserName() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(popupUserNamePath)).getText();
+    }
+
+    public void clickPopupCloseBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(popupClosePath)).click();
+    }
+
+    public void clickAuthorNameBtn2() {
+        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).click();
+    }
+
+    public String getAuthorNameBtn2() {
+        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).getText();
+    }
+
+    public void clickWhereInThreadBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(whereThreadInBtnPath)).click();
+    }
+
+    public String getWhereInThreadBtnName() {
+        return wait.until(ExpectedConditions.elementToBeClickable(whereThreadInBtnPath)).getText();
     }
 
 }

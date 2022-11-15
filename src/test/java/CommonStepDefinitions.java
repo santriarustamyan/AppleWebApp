@@ -24,6 +24,7 @@ public class CommonStepDefinitions {
     MySubscriptionsPage mySubscriptionsPage;
     ProfilePage profilePage;
     SearchPage searchPage;
+    CommunityPage communityPage;
 
 
     @Before
@@ -48,6 +49,7 @@ public class CommonStepDefinitions {
         mySubscriptionsPage = new MySubscriptionsPage(driver);
         profilePage = new ProfilePage(driver);
         searchPage = new SearchPage(driver);
+        communityPage = new CommunityPage(driver);
     }
 
     @When("I am on the Login page")
@@ -78,12 +80,16 @@ public class CommonStepDefinitions {
     @When("I am on the Search page")
     public void goSearchPage() {
         homePage.clickBtnSearch();
+    }
+
+    @When("Fill and search")
+    public void fillAndSearch() {
         searchPage.setSearchText();
         searchPage.clickSearchBtn();
     }
 
     @When("Go Filter page")
-    public void goFilterPage()  {
+    public void goFilterPage() {
         searchPage.clickFilterBtn();
     }
 
@@ -246,7 +252,7 @@ public class CommonStepDefinitions {
     @Then("I am in page Two")
     public void iAmInPageTwo() throws InterruptedException {
         String pageNumberName = "Page 2";
-        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()),"Button next no working");
+        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()), "Button next no working");
     }
 
     @And("I go previous page")
@@ -257,7 +263,43 @@ public class CommonStepDefinitions {
     @Then("I am in page One")
     public void iAmInPageOne() throws InterruptedException {
         String pageNumberName = "Page 1";
-        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()),"Previous next no working");
+        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()), "Previous next no working");
+    }
+
+    @And("Link reply to work right")
+    public void linkReplyToWorkRight() {
+        String expectedName = searchPage.getReplyToBtnName();
+        searchPage.clickReplyToBtn();
+        Assert.isTrue(("Re: " + threadPage.getThreadName()).equals(expectedName), "ReplyTo no worked");
+        driver.navigate().back();
+    }
+
+    @And("Link1 author name work right")
+    public void link1AuthorNameWorkRight() {
+        String expectedName = searchPage.getAuthorNameBtn1();
+        searchPage.clickAuthorNameBtn1();
+        String actualName = searchPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
+        searchPage.clickPopupCloseBtn();
+        Assert.isTrue(expectedName.equals(actualName), "Link 1 no worked");
+    }
+
+    @And("Link2 author name work right")
+    public void link2AuthorNameWorkRight() {
+        String expectedName = searchPage.getAuthorNameBtn2();
+        searchPage.clickAuthorNameBtn2();
+        String actualName = profilePage.getProfileName();
+        driver.navigate().back();
+        Assert.isTrue(expectedName.equals(actualName), "Link 2 no worked");
+    }
+
+    @And("Link where thread In work right")
+    public void linkWhereThreadInWorkRight() {
+        String expectedName = searchPage.getWhereInThreadBtnName();
+        searchPage.clickWhereInThreadBtn();
+        String actualName = communityPage.getCommunityName();
+        driver.navigate().back();
+        Assert.isTrue(expectedName.equals(actualName), "Link Where In no worked");
+
     }
 
     @After

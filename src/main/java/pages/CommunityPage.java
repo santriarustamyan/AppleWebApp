@@ -7,18 +7,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class ThreadPage {
+public class CommunityPage {
     WebDriver driver;
     WebDriverWait wait;
-    private final By threadNamePath = By.cssSelector("[data-action='content-post-title-text']");
 
-    public ThreadPage(WebDriver driver) {
+    private final By communityNamePath = By.cssSelector("[data-action='drop-down-button-text']");
+
+    public CommunityPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    public String getThreadName() {
-        return wait.until(ExpectedConditions.elementToBeClickable(threadNamePath)).getText();
+    public String getCommunityName() {
+        return wait.until(ExpectedConditions.elementToBeClickable(communityNamePath)).getText();
     }
 }
 
