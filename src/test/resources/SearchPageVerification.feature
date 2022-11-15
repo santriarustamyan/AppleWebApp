@@ -9,13 +9,13 @@ Feature: Search page
   @12
   Scenario:  Go to Search page and search for any query and check whether Filters work
 
-    Given Go Filter page
-    Then Discussions -> Solved -> iPhone -> verify results
-    And Discussions -> UnSolved -> iPad -> verify results
-    And UserTips -> AppleWatch -> verify results
-    And People -> verify results
-    And Author -> verify results
-    Then Time -> verify results
+    Given I click filter button in search page
+    Then Discussions -> Solved -> iPhone -> verify results search page
+    And Discussions -> UnSolved -> iPad -> verify results search page
+    And UserTips -> AppleWatch -> verify results search page
+    And People -> verify results search page
+    And Author -> verify results search page
+    Then Time -> verify results search page
 
   @20
   Scenario: Go to Search page and search for any query and check whether pagination works

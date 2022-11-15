@@ -1,5 +1,4 @@
 import dev.failsafe.internal.util.Assert;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -15,7 +14,7 @@ public class CommonStepDefinitions {
     WebDriver driver;
     HomePage homePage;
     LogInPage logInPage;
-    BrowsPage browsPage;
+    BrowsePage browsPage;
     UserPage userPage;
     AskTheCommunityPage askTheCommunityPage;
     CreateTipPage createTipPage;
@@ -28,19 +27,12 @@ public class CommonStepDefinitions {
 
 
     @Before
-    public void goHomePages() {
+    public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.get("https://discussions.apple.com/welcome");
-        driver.manage().window().maximize();
-
-    }
-
-    @Given("I am on the Home page")
-    public void goHomePage() {
         homePage = new HomePage(driver);
         logInPage = new LogInPage(driver);
-        browsPage = new BrowsPage(driver);
+        browsPage = new BrowsePage(driver);
         userPage = new UserPage(driver);
         askTheCommunityPage = new AskTheCommunityPage(driver);
         createTipPage = new CreateTipPage(driver);
@@ -50,6 +42,13 @@ public class CommonStepDefinitions {
         profilePage = new ProfilePage(driver);
         searchPage = new SearchPage(driver);
         communityPage = new CommunityPage(driver);
+    }
+
+    @Given("I am on the Home page")
+    public void goHomePage() {
+        driver.get("https://discussions.apple.com/welcome");
+        driver.manage().window().maximize();
+        homePage.clickClosePopupBtn();
     }
 
     @When("I am on the Login page")
@@ -88,14 +87,18 @@ public class CommonStepDefinitions {
         searchPage.clickSearchBtn();
     }
 
-    @When("Go Filter page")
-    public void goFilterPage() {
+    @When("I click filter button in search page")
+    public void clickFilterInSearchPage() {
         searchPage.clickFilterBtn();
     }
 
+    @When("I click filter button in browse page")
+    public void clickFilterInBrowsePage() {
+        searchPage.clickFilterBtn();
+    }
 
-    @Then("Discussions -> Solved -> iPhone -> verify results")
-    public void clickIPhoneVerifyResult() throws InterruptedException {
+    @Then("Discussions -> Solved -> iPhone -> verify results search page")
+    public void clickIPhoneVerifyResultInSearchPage() throws InterruptedException {
         String expectedNameOfSearching = "\"Discussions\", \"Solved questions\" and \"iPhone\"";
         searchPage.clickDiscussionsBtn();
         searchPage.clickSolvedBtn();
@@ -103,8 +106,17 @@ public class CommonStepDefinitions {
         Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont working right");
     }
 
-    @Then("Discussions -> UnSolved -> iPad -> verify results")
-    public void clickIPadVerifyResult() throws InterruptedException {
+    @Then("Discussions -> Solved -> iPhone -> verify results browse page")
+    public void clickIPhoneVerifyResultInBrowsePage() {
+        String expectedNameOfSearching = "\"Discussions\", \"Solved questions\" and \"iPhone\"";
+        browsPage.clickDiscussionsBtn();
+        browsPage.clickSolvedBtn();
+        browsPage.clickIPhoneBtn();
+        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getTextSearchingResult()), "Steps dont working right");
+    }
+
+    @Then("Discussions -> UnSolved -> iPad -> verify results search page")
+    public void clickIPadVerifyResultInSearchPage() throws InterruptedException {
         String expectedNameOfSearching = "\"Discussions\", \"Unsolved questions\" and \"iPad\"";
         Thread.sleep(4000);
         searchPage.clickDiscussionsBtn();
@@ -113,31 +125,49 @@ public class CommonStepDefinitions {
         Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
     }
 
-    @Then("UserTips -> AppleWatch -> verify results")
-    public void clickAppleWatchVerifyResult() throws InterruptedException {
+    @Then("Discussions -> UnSolved -> iPad -> verify results browse page")
+    public void clickIPadVerifyResultInBrowsePage() throws InterruptedException {
+        String expectedNameOfSearching = "\"Discussions\", \"Unsolved questions\" and \"iPad\"";
+        Thread.sleep(4000);
+        browsPage.clickDiscussionsBtn();
+        browsPage.clickUnSolvedBtn();
+        browsPage.clickIpadBtn();
+        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getTextSearchingResult()), "Steps dont work right");
+    }
+
+    @Then("UserTips -> AppleWatch -> verify results search page")
+    public void clickAppleWatchVerifyResultInSearchPage() throws InterruptedException {
         String expectedNameOfSearching = "\"User Tips\" and \"Apple Watch\"";
         searchPage.clickUserTipBtn();
         searchPage.clickAppleWatchBtn();
         Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
     }
 
-    @Then("People -> verify results")
-    public void clickPeopleVerifyResult() {
+    @Then("UserTips -> AppleWatch -> verify results browse page")
+    public void clickAppleWatchVerifyResultInBrowsePage() throws InterruptedException {
+        String expectedNameOfSearching = "\"User Tips\" and \"Apple Watch\"";
+        browsPage.clickUserTipBtn();
+        browsPage.clickAppleWatchBtn();
+        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getTextSearchingResult()), "Steps dont work right");
+    }
+
+    @Then("People -> verify results search page")
+    public void clickPeopleVerifyResultInSearchPage() {
         String expectedNameOfSearching = "\"People\"";
         searchPage.clickPeopleBtn();
         searchPage.peopleAvatar();
         Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Step click People dont work right");
     }
 
-    @Then("Author -> verify results")
-    public void clickAuthorVerifyResult() {
+    @Then("Author -> verify results search page")
+    public void clickAuthorVerifyResultInSearchPage() {
         searchPage.clickDiscussionsBtn();
         searchPage.clickAuthorBtn();
         Assert.isTrue(searchPage.searchByAuthorBtnIsVisible(), "Step click Author dont work right");
     }
 
-    @Then("Time -> verify results")
-    public void clickTimeVerifyResult() {
+    @Then("Time -> verify results search page")
+    public void clickTimeVerifyResultInSearchPage() {
         String expectedNameOfSearching = "\"Discussions\" and \"Last day\"";
         searchPage.clickTimeBtn();
         Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
@@ -302,8 +332,8 @@ public class CommonStepDefinitions {
 
     }
 
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
+//    @After
+//    public void tearDown() {
+//        driver.quit();
+//    }
 }

@@ -9,6 +9,14 @@ Feature: Browse page
 
     Then Links should be functional
 
+  @2
+  Scenario: Go to Browse page and check whether Filters function as intended
+    Given I click filter button in browse page
+    Then Discussions -> Solved -> iPhone -> verify results browse page
+    And Discussions -> UnSolved -> iPad -> verify results browse page
+    And UserTips -> AppleWatch -> verify results browse page
+
+
   @3
   Scenario: Go to Browse page and check whether Ability to select 20 or 60 items per page.
 

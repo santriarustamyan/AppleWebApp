@@ -15,6 +15,7 @@ public class HomePage {
     private final By logInBtnPath = By.cssSelector("[class='localnav-button button button-reduced popup-action-button']");
     private final By browseBtnPath = By.cssSelector("[class='localnav-menu-link'][href='/browse']");
     private final By searchBtnPath = By.cssSelector("[class='localnav-menu-link'][href='/search']");
+    private final By closePopUpAlertPath = By.cssSelector("[class='icon icon-close close-notificaiton']");
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -33,5 +34,11 @@ public class HomePage {
         wait.until(ExpectedConditions.elementToBeClickable(searchBtnPath)).click();
     }
 
+    public void clickClosePopupBtn() {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(closePopUpAlertPath)).click();
+        } catch (Exception ignored) {
+        }
+    }
 }
 

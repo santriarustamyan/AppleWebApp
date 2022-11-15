@@ -16,37 +16,27 @@ public class SearchPage {
     private final By searchBtnPath = By.cssSelector("[class='button button-primary search-button hide-mobile']");
     private final By filteredByTextPath = By.cssSelector("[class='filtered-by-text']");
     private final By closePopUpAlertPath = By.cssSelector("[class='icon icon-close close-notificaiton']");
-
     private final By filterBtnPath = By.cssSelector("[class='open-filters-button']");
     private final By resetBtnPath = By.cssSelector("[class='reset-filters-button']");
-
     private final By discussionsBtnPath = By.cssSelector("a[data-filter-id='filterDiscussions']");
     private final By userTipsBtnPath = By.cssSelector("a[data-filter-id='filterUserTips']");
     private final By peopleBtnPath = By.cssSelector("a[data-filter-id='filterPeople']");
-
     private final By typeBtnPath = By.cssSelector("div[class='filters-layout-desktop-filters hide-mobile open'] button[aria-label='Type filters Choose one']");
     private final By solvedQuestionsBtnPath = By.cssSelector(".filter-link[href='?type=filterAnswered']");
     private final By unsolvedQuestionsBtnPath = By.cssSelector("a[data-filter-id='filterOpen']");
-
     private final By communityBtnPath = By.cssSelector("[data-filter-group-id='community']");
     private final By iPhoneBtnPath = By.cssSelector("a[data-filter-id='2043020']");
     private final By iPadBtnPath = By.cssSelector("a[data-filter-id='2039020']");
     private final By appleWatchBtnPath = By.cssSelector("a[data-filter-id='3061020']");
-
     private final By authorBtnPath = By.cssSelector("[data-filter-group-id='author']");
-
     private final By timeBtnPath = By.cssSelector("[data-filter-group-id='time']");
     private final By dayBtnPath = By.cssSelector("a[data-filter-id='day']");
-
     private final By topicHeadingPath = By.cssSelector("[class='topics-heading']");
-
     private final By peopleAvatarPath = By.cssSelector("[class='post-author-profile author-user']");
     private final By searchByAuthorTextFieldPath = By.cssSelector("[aria-label='Search by author']");
-
     private final By nextBtnPath = By.cssSelector("[class='next-page icon icon-standalone icon-chevronright']");
     private final By previousBtnPath = By.cssSelector("[class='previous-page icon icon-standalone icon-chevronleft']");
     private final By pageNumberPath = By.cssSelector("[class='page-number']");
-
     private final By nameReplyToBtnPath = By.cssSelector("[class='topics-table-row thread']:nth-child(2) > .topics-table-row-details > article > a");
     private final By authorNameBtn2Path = By.cssSelector("tr:nth-child(2) > td.topics-table-row-latest-activity > div > a.author");
     private final By whereThreadInBtnPath = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > a.community-link");
@@ -75,23 +65,19 @@ public class SearchPage {
 
     public void clickSolvedBtn() throws InterruptedException {
         wait.until(ExpectedConditions.elementToBeClickable(closePopUpAlertPath)).click();
-
         wait.until(ExpectedConditions.elementToBeClickable(typeBtnPath)).click();
         Thread.sleep(4000);
         wait.until(ExpectedConditions.elementToBeClickable(solvedQuestionsBtnPath)).click();
     }
 
     public void clickUnSolvedBtn() throws InterruptedException {
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight/8)");
-
         Thread.sleep(4000);
         wait.until(ExpectedConditions.elementToBeClickable(unsolvedQuestionsBtnPath)).click();
     }
 
     public void clickIPhoneBtn() {
-
         wait.until(ExpectedConditions.elementToBeClickable(communityBtnPath)).click();
         wait.until(ExpectedConditions.elementToBeClickable(iPhoneBtnPath)).click();
     }
@@ -139,14 +125,14 @@ public class SearchPage {
     public void peopleAvatar() {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(peopleAvatarPath));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
     public void clickResetBtn() {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(resetBtnPath)).click();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
