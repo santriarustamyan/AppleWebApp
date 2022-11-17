@@ -1,3 +1,4 @@
+@sanity
 Feature: Browse page
 
   Background:

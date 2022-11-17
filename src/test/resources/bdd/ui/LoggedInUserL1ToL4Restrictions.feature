@@ -1,3 +1,4 @@
+@sanity
 Feature: Verify options on home page for logged in (L1-L4) external user
 
   @17

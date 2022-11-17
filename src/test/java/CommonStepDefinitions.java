@@ -1,4 +1,5 @@
 import dev.failsafe.internal.util.Assert;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -329,11 +330,47 @@ public class CommonStepDefinitions {
         String actualName = communityPage.getCommunityName();
         driver.navigate().back();
         Assert.isTrue(expectedName.equals(actualName), "Link Where In no worked");
-
     }
 
-//    @After
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @Given("I click filter button in my subscriptions page")
+    public void iClickFilterButtonInMySubscriptionsPage() {
+        mySubscriptionsPage.clickFilterBtn();
+    }
+
+    @Then("Click user tips verify results my subscriptions page")
+    public void clickUserTipsVerifyResultsMySubscriptionsPage() {
+        String expectedName = "\"Content\", \"Following\" and \"User Tips\"";
+        mySubscriptionsPage.clickUserTipBtn();
+        String actualName = mySubscriptionsPage.getTextSearchingResult();
+        Assert.isTrue(expectedName.equals(actualName), "Filter User Tips no working");
+    }
+
+    @Then("Latest activity button is functional in My Subscriptions")
+    public void latestActivityButtonIsFunctionalInMySubscriptions() {
+        String expectedAttributeName = "icon icon-after icon-chevrondown";
+        mySubscriptionsPage.clickTopicsLatestActivityBtnText();
+        String actualAttributeName = mySubscriptionsPage.getTopicsLatestActivitySpanBtnText();
+        Assert.isTrue(expectedAttributeName.equals(actualAttributeName), "Activity button no functional");
+    }
+
+    @And("Thread button is functional in My Subscriptions")
+    public void threadButtonIsFunctionalInMySubscriptions() {
+        String expectedAttributeName = "icon icon-after icon-chevrondown";
+        mySubscriptionsPage.clickTopicsThreadBtnText();
+        String actualAttributeName = mySubscriptionsPage.getTopicsThreadBtnSpanText();
+        Assert.isTrue(expectedAttributeName.equals(actualAttributeName), "Activity button no functional");
+    }
+
+    @And("Community button is functional in My Subscriptions")
+    public void communityButtonIsFunctionalInMySubscriptions() {
+        String expectedAttributeName = "icon icon-after icon-chevrondown";
+        mySubscriptionsPage.clickTopicsCommunityBtnText();
+        String actualAttributeName = mySubscriptionsPage.getTopicsCommunityBtnSpanText();
+        Assert.isTrue(expectedAttributeName.equals(actualAttributeName), "Activity button no functional");
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
 }

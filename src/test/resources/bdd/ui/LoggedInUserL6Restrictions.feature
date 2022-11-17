@@ -1,3 +1,4 @@
+@sanity
 Feature: Verify options on home page for logged in L6 external user
 
   @19

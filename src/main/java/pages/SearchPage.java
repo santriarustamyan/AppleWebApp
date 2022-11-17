@@ -59,7 +59,7 @@ public class SearchPage {
 
     public void clickDiscussionsBtn() {
         wait.until(ExpectedConditions.elementToBeClickable(discussionsBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath));
 
     }
 
