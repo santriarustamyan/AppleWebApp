@@ -401,7 +401,7 @@ public class CommonStepDefinitions {
         String expectedName = browsPage.getSubCommunityBtnName();
         browsPage.clickSubCommunityBtn();
         browsPage.clickSwitchTab(1);
-        String actualName = communityPage.getCommunityName();
+        String actualName = communityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.close();
         browsPage.clickSwitchTab(0);
         Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
@@ -411,33 +411,33 @@ public class CommonStepDefinitions {
     public void linkSubCommunityButtonRightSearchPage() {
         String expectedName = searchPage.getSubCommunityBtnName();
         searchPage.clickSubCommunityBtn();
-        String actualName = communityPage.getCommunityName();
+        String actualName = communityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.navigate().back();
         Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
     }
 
     @And("Link name author is functional sub community page")
     public void linkNameAuthorClickIsFunctionalSubCommunityPage() {
-        String expectedName = communityPage.getAuthorNameBtn();
-        communityPage.clickAuthorNameBtn();
-        String actualName = communityPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
-        communityPage.clickPopupCloseBtn();
+        String expectedName = communityPage.getButtonText(SubCommunityPage.Button.AuthorName);
+        communityPage.clickButton(SubCommunityPage.Button.AuthorName);
+        String actualName = communityPage.getButtonText(SubCommunityPage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
+        communityPage.clickButton(SubCommunityPage.Button.PopupClose);
         Assert.isTrue(expectedName.equals(actualName), "Link author name no worked");
     }
 
     @Then("Link icon author is functional sub community page")
     public void linkIconAuthorClickIsFunctionalSubCommunityPage() {
-        String expectedName = communityPage.getAuthorNameBtn();
-        communityPage.clickAuthorIconBtn();
-        String actualName = communityPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
-        communityPage.clickPopupCloseBtn();
+        String expectedName = communityPage.getButtonText(SubCommunityPage.Button.AuthorName);
+        communityPage.clickButton(SubCommunityPage.Button.AuthorIcon);
+        String actualName = communityPage.getButtonText(SubCommunityPage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
+        communityPage.clickButton(SubCommunityPage.Button.PopupClose);
         Assert.isTrue(expectedName.equals(actualName), "Link icon no worked");
     }
 
     @Then("Link thread name is functional sub community page")
     public void linkThreadNameIsFunctionalSubCommunityPage() {
-        String expectedThreadName = communityPage.getThreadName();
-        communityPage.clickThreadLink();
+        String expectedThreadName = communityPage.getButtonText(SubCommunityPage.Button.ThreadName);
+        communityPage.clickButton(SubCommunityPage.Button.ThreadName);
         String actualTreadName = threadPage.getThreadName();
         Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is no functional");
     }

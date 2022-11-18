@@ -6,6 +6,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class SubCommunityPage {
     WebDriver driver;
@@ -17,40 +19,38 @@ public class SubCommunityPage {
     private final By popupClosePath = By.cssSelector(" div:nth-child(19) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2) > span:nth-child(1)");
     private final By threadNamePath = By.id("community-post-0-title");
 
+    public enum Button {
+        CommunityName,
+        AuthorIcon,
+        AuthorName,
+        PopupUserName,
+        PopupClose,
+        ThreadName
+    }
+
+    private final Map<SubCommunityPage.Button, By> paths = new EnumMap<>(SubCommunityPage.Button.class);
+
+    {
+        paths.put(SubCommunityPage.Button.CommunityName, communityNamePath);
+        paths.put(SubCommunityPage.Button.AuthorIcon, authorIconBtnPath);
+        paths.put(SubCommunityPage.Button.AuthorName, authorNameBtnPath);
+        paths.put(SubCommunityPage.Button.PopupUserName, popupUserNamePath);
+        paths.put(SubCommunityPage.Button.PopupClose, popupClosePath);
+        paths.put(SubCommunityPage.Button.ThreadName, threadNamePath);
+    }
+
+
     public SubCommunityPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    public String getCommunityName() {
-        return wait.until(ExpectedConditions.elementToBeClickable(communityNamePath)).getText();
+    public String getButtonText(Button button) {
+        return wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).getText();
     }
 
-    public String getAuthorNameBtn() {
-        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtnPath)).getText();
-    }
-    public void clickAuthorIconBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(authorIconBtnPath)).click();
-    }
-    public void clickAuthorNameBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtnPath)).click();
+    public void clickButton(Button button) {
+        wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).click();
     }
 
-    public String getPopupUserName() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(popupUserNamePath)).getText();
-    }
-
-    public void clickPopupCloseBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(popupClosePath)).click();
-    }
-
-    public void clickThreadLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(threadNamePath)).click();
-    }
-    public String getThreadName() {
-        return wait.until(ExpectedConditions.elementToBeClickable(threadNamePath)).getText();
-    }
 }
-
-
-
