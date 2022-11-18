@@ -1,4 +1,5 @@
 @sanity
+@mySubs
 Feature: My Subscriptions page
 
 
@@ -11,14 +12,13 @@ Feature: My Subscriptions page
   @4
   Scenario: Go to My Subscriptions page and check whether Links are functional
 
-    Given Profile link is a functional
+    When Profile link is a functional
 
   @5
   Scenario: Go to My Subscriptions page and check whether Filters function as intended
 
     Given I click filter button in my subscriptions page
     Then  Click user tips verify results my subscriptions page
-
 
   @6
   Scenario: Go to My Subscriptions page and check whether Able to select 20 or 60 items per page

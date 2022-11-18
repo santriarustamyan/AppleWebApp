@@ -15,7 +15,6 @@ public class MySubscriptionsPage {
     WebDriver driver;
     WebDriverWait wait;
     private final By nameProfilePath = By.cssSelector("a[class='author'] > span:nth-child(1)");
-    private final By closePopUpAlertPath = By.cssSelector("[class='icon icon-close close-notificaiton']");
     private final By userTipsBtnPath = By.cssSelector("a[data-filter-id='filterUserTips']");
     private final By filterBtnPath = By.cssSelector("[class='open-filters-button']");
     private final By filteredByTextPath = By.cssSelector("[class='filtered-by-text']");
@@ -26,18 +25,19 @@ public class MySubscriptionsPage {
     private final By topicsCommunitySpanBtnPath = By.cssSelector("[data-action='topics-community'] span");
     private final By topicsThreadBtnSpanPath = By.cssSelector("[data-action='topics-thread'] span");
     private final By topicsLatestActivitySpanBtnPath = By.cssSelector("[data-action='topics-latest-activity'] span");
+    private final By peopleBtnPath = By.cssSelector("a[data-filter-id='filterPeople']");
 
 
     public MySubscriptionsPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
+
     private By pagePerBtnPath(String pageCount) {
         return By.cssSelector("[aria-label='" + pageCount + " per page']");
     }
 
     public void clickFirstProfileLink() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(closePopUpAlertPath)).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(nameProfilePath)).click();
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
@@ -71,6 +71,10 @@ public class MySubscriptionsPage {
         return wait.until(ExpectedConditions.elementToBeClickable(filteredByTextPath)).getText();
     }
 
+    public void clickPeopleBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(topicsCommunityBtnPath));
+        wait.until(ExpectedConditions.elementToBeClickable(peopleBtnPath)).click();
+    }
     public void clickTopicsCommunityBtnText() {
         wait.until(ExpectedConditions.elementToBeClickable(topicsCommunityBtnPath)).click();
         wait.until(ExpectedConditions.elementToBeClickable(topicsCommunityBtnPath));

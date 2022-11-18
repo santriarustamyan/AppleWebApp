@@ -15,7 +15,6 @@ public class SearchPage {
     private final By searchTextFieldPath = By.id("search");
     private final By searchBtnPath = By.cssSelector("[class='button button-primary search-button hide-mobile']");
     private final By filteredByTextPath = By.cssSelector("[class='filtered-by-text']");
-    private final By closePopUpAlertPath = By.cssSelector("[class='icon icon-close close-notificaiton']");
     private final By filterBtnPath = By.cssSelector("[class='open-filters-button']");
     private final By resetBtnPath = By.cssSelector("[class='reset-filters-button']");
     private final By discussionsBtnPath = By.cssSelector("a[data-filter-id='filterDiscussions']");
@@ -39,14 +38,14 @@ public class SearchPage {
     private final By pageNumberPath = By.cssSelector("[class='page-number']");
     private final By nameReplyToBtnPath = By.cssSelector("[class='topics-table-row thread']:nth-child(2) > .topics-table-row-details > article > a");
     private final By authorNameBtn2Path = By.cssSelector("tr:nth-child(2) > td.topics-table-row-latest-activity > div > a.author");
-    private final By whereThreadInBtnPath = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > a.community-link");
+    private final By subCommunityBtnPath = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > a.community-link");
     private final By authorNameBtn1Path = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > [data-action='topic-author']");
     private final By popupUserNamePath = By.id("user-profile-popup-title");
     private final By popupClosePath = By.cssSelector("[class='modal-close-button']");
 
     public SearchPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void setSearchText() {
@@ -60,11 +59,9 @@ public class SearchPage {
     public void clickDiscussionsBtn() {
         wait.until(ExpectedConditions.elementToBeClickable(discussionsBtnPath)).click();
         wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath));
-
     }
 
     public void clickSolvedBtn() throws InterruptedException {
-        wait.until(ExpectedConditions.elementToBeClickable(closePopUpAlertPath)).click();
         wait.until(ExpectedConditions.elementToBeClickable(typeBtnPath)).click();
         Thread.sleep(4000);
         wait.until(ExpectedConditions.elementToBeClickable(solvedQuestionsBtnPath)).click();
@@ -141,7 +138,6 @@ public class SearchPage {
     }
 
     public void clickNextBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(closePopUpAlertPath)).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(nextBtnPath)).click();
     }
 
@@ -186,12 +182,12 @@ public class SearchPage {
         return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).getText();
     }
 
-    public void clickWhereInThreadBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(whereThreadInBtnPath)).click();
+    public void clickSubCommunityBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).click();
     }
 
-    public String getWhereInThreadBtnName() {
-        return wait.until(ExpectedConditions.elementToBeClickable(whereThreadInBtnPath)).getText();
+    public String getSubCommunityBtnName() {
+        return wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).getText();
     }
 
 }

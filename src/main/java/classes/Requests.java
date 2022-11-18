@@ -1,4 +1,4 @@
-package pages;
+package classes;
 
 import static io.restassured.RestAssured.given;
 

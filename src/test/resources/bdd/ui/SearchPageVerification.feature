@@ -1,4 +1,5 @@
 @sanity
+@search
 Feature: Search page
 
   Background:
@@ -18,6 +19,15 @@ Feature: Search page
     And Author -> verify results search page
     Then Time -> verify results search page
 
+  @13
+  Scenario: Go to search page and search for any query and check whether All clickable links navigate to the relevant pages / locations / profiles
+
+    Then Link reply to work right search page
+    And Link1 author name work right search page
+    And Link2 author name work right search page
+    And Link sub community button right search page
+
+
   @20
   Scenario: Go to Search page and search for any query and check whether pagination works
 
@@ -25,12 +35,3 @@ Feature: Search page
     And I am in page Two
     And I go previous page
     Then I am in page One
-
-  @13
-  Scenario: Go to search page and search for any query and check whether All clickable links navigate to the relevant pages / locations / profiles
-
-    Then Link reply to work right
-    And Link1 author name work right
-    And Link2 author name work right
-    And Link where thread In work right
-

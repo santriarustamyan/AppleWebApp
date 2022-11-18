@@ -1,4 +1,5 @@
 @sanity
+@browse
 Feature: Browse page
 
   Background:
@@ -8,7 +9,11 @@ Feature: Browse page
   @1
   Scenario: Go to Browse page and check whether Links are functional
 
-    Then Links should be functional
+    Then Link thread name should be functional
+    And Link1 author name work right browse page
+    And Link2 author name work right browse page
+    And Link sub community button right browse page
+
 
   @2
   Scenario: Go to Browse page and check whether Filters function as intended

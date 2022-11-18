@@ -1,3 +1,6 @@
+package stepDefinitions;
+
+import classes.Requests;
 import dev.failsafe.internal.util.Assert;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -24,7 +27,7 @@ public class CommonStepDefinitions {
     MySubscriptionsPage mySubscriptionsPage;
     ProfilePage profilePage;
     SearchPage searchPage;
-    CommunityPage communityPage;
+    SubCommunityPage communityPage;
 
 
     @Before
@@ -42,7 +45,7 @@ public class CommonStepDefinitions {
         mySubscriptionsPage = new MySubscriptionsPage(driver);
         profilePage = new ProfilePage(driver);
         searchPage = new SearchPage(driver);
-        communityPage = new CommunityPage(driver);
+        communityPage = new SubCommunityPage(driver);
     }
 
     @Given("I am on the Home page")
@@ -174,11 +177,21 @@ public class CommonStepDefinitions {
         Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
     }
 
-    @When("Links should be functional")
-    public void goThreadPage() {
-        String threadName = browsPage.getThreadName();
-        browsPage.clickThreadLinkAndSwitchTab();
-        Assert.isTrue(threadName.equals(threadPage.getThreadName()), "Link is not working");
+    @When("Link thread name should be functional")
+    public void linkThreadAreFunctional() {
+        String expectedThreadName = browsPage.getThreadName();
+        browsPage.clickThreadLink();
+        browsPage.clickSwitchTab(1);
+        String actualTreadName = threadPage.getThreadName();
+        Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is not working");
+        driver.close();
+        browsPage.clickSwitchTab(0);
+    }
+
+    @Then("Go sub community page")
+    public void goSubCommunityPage() {
+        browsPage.clickSubCommunityBtn();
+        browsPage.clickSwitchTab(1);
     }
 
     @Then("My Subscriptions button is displayed")
@@ -268,10 +281,8 @@ public class CommonStepDefinitions {
     @Then("Try Access User Tip With Link")
     public void TryFindUserTipWithLink() {
         driver.get("https://discussions.apple.com/post/userTip");
-
         String expectedTitle = "Error - Access Denied - Apple Community";
         String currentTitle = driver.getTitle();
-
         Assert.isTrue(currentTitle.equals(expectedTitle), "Page is accessible");
     }
 
@@ -297,16 +308,16 @@ public class CommonStepDefinitions {
         Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()), "Previous next no working");
     }
 
-    @And("Link reply to work right")
-    public void linkReplyToWorkRight() {
+    @And("Link reply to work right search page")
+    public void linkReplyToWorkRightSearchPage() {
         String expectedName = searchPage.getReplyToBtnName();
         searchPage.clickReplyToBtn();
         Assert.isTrue(("Re: " + threadPage.getThreadName()).equals(expectedName), "ReplyTo no worked");
         driver.navigate().back();
     }
 
-    @And("Link1 author name work right")
-    public void link1AuthorNameWorkRight() {
+    @And("Link1 author name work right search page")
+    public void link1AuthorNameWorkRightSearchPage() {
         String expectedName = searchPage.getAuthorNameBtn1();
         searchPage.clickAuthorNameBtn1();
         String actualName = searchPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
@@ -314,8 +325,8 @@ public class CommonStepDefinitions {
         Assert.isTrue(expectedName.equals(actualName), "Link 1 no worked");
     }
 
-    @And("Link2 author name work right")
-    public void link2AuthorNameWorkRight() {
+    @And("Link2 author name work right search page")
+    public void link2AuthorNameWorkRightSearchPage() {
         String expectedName = searchPage.getAuthorNameBtn2();
         searchPage.clickAuthorNameBtn2();
         String actualName = profilePage.getProfileName();
@@ -323,13 +334,15 @@ public class CommonStepDefinitions {
         Assert.isTrue(expectedName.equals(actualName), "Link 2 no worked");
     }
 
-    @And("Link where thread In work right")
-    public void linkWhereThreadInWorkRight() {
-        String expectedName = searchPage.getWhereInThreadBtnName();
-        searchPage.clickWhereInThreadBtn();
-        String actualName = communityPage.getCommunityName();
-        driver.navigate().back();
-        Assert.isTrue(expectedName.equals(actualName), "Link Where In no worked");
+    @And("Link2 author name work right browse page")
+    public void link2AuthorNameWorkRightBrowsePage() {
+        String expectedName = browsPage.getAuthorNameBtn2();
+        browsPage.clickAuthorNameBtn2();
+        browsPage.clickSwitchTab(1);
+        String actualName = profilePage.getProfileName();
+        driver.close();
+        browsPage.clickSwitchTab(0);
+        Assert.isTrue(expectedName.equals(actualName), "Link 2 no worked");
     }
 
     @Given("I click filter button in my subscriptions page")
@@ -367,6 +380,65 @@ public class CommonStepDefinitions {
         mySubscriptionsPage.clickTopicsCommunityBtnText();
         String actualAttributeName = mySubscriptionsPage.getTopicsCommunityBtnSpanText();
         Assert.isTrue(expectedAttributeName.equals(actualAttributeName), "Activity button no functional");
+    }
+
+    @And("Link1 author name work right browse page")
+    public void linkAuthorNameWorkRightBrowsePage() {
+        String expectedName = browsPage.getAuthorNameBtn1();
+        browsPage.clickAuthorNameBtn1();
+        String actualName = browsPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
+        browsPage.clickPopupCloseBtn();
+        Assert.isTrue(expectedName.equals(actualName), "Link 1 no worked");
+    }
+
+    @And("Link sub community button right browse page")
+    public void linkSubCommunityButtonRightBrowsePage() {
+        String expectedName = browsPage.getSubCommunityBtnName();
+        browsPage.clickSubCommunityBtn();
+        browsPage.clickSwitchTab(1);
+        String actualName = communityPage.getCommunityName();
+        driver.close();
+        browsPage.clickSwitchTab(0);
+        Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
+    }
+
+    @And("Link sub community button right search page")
+    public void linkSubCommunityButtonRightSearchPage() {
+        String expectedName = searchPage.getSubCommunityBtnName();
+        searchPage.clickSubCommunityBtn();
+        String actualName = communityPage.getCommunityName();
+        driver.navigate().back();
+        Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
+    }
+
+    @And("Link name author is functional sub community page")
+    public void linkNameAuthorClickIsFunctionalSubCommunityPage() {
+        String expectedName = communityPage.getAuthorNameBtn();
+        communityPage.clickAuthorNameBtn();
+        String actualName = communityPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
+        communityPage.clickPopupCloseBtn();
+        Assert.isTrue(expectedName.equals(actualName), "Link author name no worked");
+    }
+
+    @Then("Link icon author is functional sub community page")
+    public void linkIconAuthorClickIsFunctionalSubCommunityPage() {
+        String expectedName = communityPage.getAuthorNameBtn();
+        communityPage.clickAuthorIconBtn();
+        String actualName = communityPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
+        communityPage.clickPopupCloseBtn();
+        Assert.isTrue(expectedName.equals(actualName), "Link icon no worked");
+    }
+
+    @Then("Link thread name is functional sub community page")
+    public void linkThreadNameIsFunctionalSubCommunityPage() {
+        String expectedThreadName = communityPage.getThreadName();
+        System.out.println(expectedThreadName);;
+        communityPage.clickThreadLink();
+
+        String actualTreadName = threadPage.getThreadName();
+        System.out.println(actualTreadName);
+        Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is no functional");
+
     }
 
     @After

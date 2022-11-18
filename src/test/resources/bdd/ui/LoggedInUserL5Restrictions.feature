@@ -1,4 +1,5 @@
 @sanity
+@login
 Feature: Verify options on home page for logged in L5 external user
 
   @18

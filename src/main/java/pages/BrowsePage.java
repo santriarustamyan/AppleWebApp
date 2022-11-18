@@ -24,21 +24,28 @@ public class BrowsePage {
     private final By iPadBtnPath = By.cssSelector("a[data-filter-id='2039020']");
     private final By appleWatchBtnPath = By.cssSelector("a[data-filter-id='3061020']");
     private final By topicHeadingPath = By.cssSelector("[class='topics-heading']");
-    private final By closePopUpAlertPath = By.cssSelector("[class='icon icon-close close-notificaiton']");
+    private final By authorNameBtn1Path = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > [data-action='topic-author']");
+    private final By popupUserNamePath = By.id("user-profile-popup-title");
+    private final By popupClosePath = By.cssSelector("[class='modal-close-button']");
+    private final By authorNameBtn2Path = By.cssSelector("tr:nth-child(2) > td.topics-table-row-latest-activity > div > a.author");
+    private final By subCommunityBtnPath = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > a.community-link");
+
 
     public BrowsePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     private By pagePerBtnPath(String pageCount) {
         return By.cssSelector("[aria-label='" + pageCount + " per page']");
     }
 
-    public void clickThreadLinkAndSwitchTab() {
+    public void clickThreadLink() {
         driver.findElement(threadNamePath).click();
+    }
+    public void clickSwitchTab(int tab) {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(tab));
     }
 
     public String getThreadName() {
@@ -58,13 +65,8 @@ public class BrowsePage {
     }
 
     public void clickDiscussionsBtn() {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(closePopUpAlertPath)).click();
-        } catch (Exception ignored) {
-        }
         wait.until(ExpectedConditions.elementToBeClickable(discussionsBtnPath)).click();
         wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath));
-
     }
 
     public void clickSolvedBtn() {
@@ -101,6 +103,31 @@ public class BrowsePage {
 
     public String getTextSearchingResult() {
         return wait.until(ExpectedConditions.elementToBeClickable(filteredByTextPath)).getText();
+    }
+    public String getPopupUserName() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(popupUserNamePath)).getText();
+    }
+    public void clickPopupCloseBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(popupClosePath)).click();
+    } public String getAuthorNameBtn1() {
+        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).getText();
+    }
+    public void clickAuthorNameBtn1() {
+        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).click();
+    }
+    public void clickAuthorNameBtn2() {
+        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).click();
+    }
+
+    public String getAuthorNameBtn2() {
+        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).getText();
+    }
+    public void clickSubCommunityBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).click();
+    }
+
+    public String getSubCommunityBtnName() {
+        return wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).getText();
     }
 
 }
