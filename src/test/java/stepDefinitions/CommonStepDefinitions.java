@@ -214,37 +214,39 @@ public class CommonStepDefinitions {
 
     @Then("Browse button is displayed")
     public void browse_button_is_displayed() {
-        Assert.isTrue(userPage.browseBtnIsDisplayed(), "Browse button is not displayed");
+        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.Browse), "Browse button is not displayed");
     }
 
     @Then("Search button is displayed")
     public void search_button_is_displayed() {
-        Assert.isTrue(userPage.searchBtnIsDisplayed(), "Search button is not displayed");
+        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.Search), "Search button is not displayed");
     }
 
     @Then("Ask the Community button is displayed")
     public void post_question_button_is_displayed() {
-        Assert.isTrue(userPage.askTheCommunityBtnIsDisplayed(), "Post Question button is not displayed");
+        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.AskTheCommunity), "Post Question button is not displayed");
     }
 
     @Then("Post User Tip button is displayed")
     public void post_user_tip_button_is_displayed() {
-        Assert.isTrue(userPage.createTipBtnIsDisplayed(), "Post User Tip button is not displayed");
+        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.CreateTip), "Post User Tip button is not displayed");
     }
 
     @Then("Post User Tip button is not displayed")
     public void post_user_tip_button_is_not_displayed() {
-        Assert.isTrue(!userPage.createTipBtnIsDisplayed(), "Post User Tip button is displayed");
+        Assert.isTrue(!userPage.buttonIsDisplayed(UserPage.Button.CreateTip), "Post User Tip button is displayed");
     }
 
     @Then("Lounge button is displayed")
     public void lounge_button_is_displayed() {
-        Assert.isTrue(userPage.loungeLibelIsDisplayed(), "Lounge button is not displayed");
+        userPage.clickMoreBtn();
+        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.Lounge), "Lounge button is not displayed");
     }
 
     @Then("Lounge button is not displayed")
     public void lounge_button_is_not_displayed() {
-        Assert.isTrue(!userPage.loungeLibelIsDisplayed(), "Lounge button is displayed");
+        userPage.clickMoreBtn();
+        Assert.isTrue(!userPage.buttonIsDisplayed(UserPage.Button.Lounge), "Lounge button is displayed");
     }
 
     @Then("Access Lounge Announcements")
@@ -432,13 +434,9 @@ public class CommonStepDefinitions {
     @Then("Link thread name is functional sub community page")
     public void linkThreadNameIsFunctionalSubCommunityPage() {
         String expectedThreadName = communityPage.getThreadName();
-        System.out.println(expectedThreadName);;
         communityPage.clickThreadLink();
-
         String actualTreadName = threadPage.getThreadName();
-        System.out.println(actualTreadName);
         Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is no functional");
-
     }
 
     @After
