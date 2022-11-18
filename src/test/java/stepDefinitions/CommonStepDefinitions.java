@@ -88,26 +88,28 @@ public class CommonStepDefinitions {
     @When("Fill and search")
     public void fillAndSearch() {
         searchPage.setSearchText();
-        searchPage.clickSearchBtn();
+        searchPage.clickButton(SearchPage.Button.SearchButton);
     }
 
     @When("I click filter button in search page")
     public void clickFilterInSearchPage() {
-        searchPage.clickFilterBtn();
+        searchPage.clickButton(SearchPage.Button.FilterButton);
     }
 
     @When("I click filter button in browse page")
     public void clickFilterInBrowsePage() {
-        searchPage.clickFilterBtn();
+        searchPage.clickButton(SearchPage.Button.FilterButton);
     }
 
     @Then("Discussions -> Solved -> iPhone -> verify results search page")
     public void clickIPhoneVerifyResultInSearchPage() throws InterruptedException {
         String expectedNameOfSearching = "\"Discussions\", \"Solved questions\" and \"iPhone\"";
-        searchPage.clickDiscussionsBtn();
+        searchPage.clickButton(SearchPage.Button.DiscussionsButton);
+        searchPage.waitButtonVisibility();
         searchPage.clickSolvedBtn();
-        searchPage.clickIPhoneBtn();
-        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont working right");
+        searchPage.clickButton(SearchPage.Button.CommunityButton);
+        searchPage.clickButton(SearchPage.Button.IPhoneButton);
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getButtonText(SearchPage.Button.FilteredByText)), "Steps dont working right");
     }
 
     @Then("Discussions -> Solved -> iPhone -> verify results browse page")
@@ -123,10 +125,12 @@ public class CommonStepDefinitions {
     public void clickIPadVerifyResultInSearchPage() throws InterruptedException {
         String expectedNameOfSearching = "\"Discussions\", \"Unsolved questions\" and \"iPad\"";
         Thread.sleep(4000);
-        searchPage.clickDiscussionsBtn();
+        searchPage.clickButton(SearchPage.Button.DiscussionsButton);
+        searchPage.waitButtonVisibility();
         searchPage.clickUnSolvedBtn();
-        searchPage.clickIpadBtn();
-        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
+        searchPage.clickButton(SearchPage.Button.CommunityButton);
+        searchPage.clickButton(SearchPage.Button.IPadButton);
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getButtonText(SearchPage.Button.FilteredByText)), "Steps dont work right");
     }
 
     @Then("Discussions -> UnSolved -> iPad -> verify results browse page")
@@ -142,9 +146,10 @@ public class CommonStepDefinitions {
     @Then("UserTips -> AppleWatch -> verify results search page")
     public void clickAppleWatchVerifyResultInSearchPage() throws InterruptedException {
         String expectedNameOfSearching = "\"User Tips\" and \"Apple Watch\"";
-        searchPage.clickUserTipBtn();
+        searchPage.waitButtonVisibility();
+        searchPage.clickButton(SearchPage.Button.UserTipsButton);
         searchPage.clickAppleWatchBtn();
-        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getButtonText(SearchPage.Button.FilteredByText)), "Steps dont work right");
     }
 
     @Then("UserTips -> AppleWatch -> verify results browse page")
@@ -158,23 +163,25 @@ public class CommonStepDefinitions {
     @Then("People -> verify results search page")
     public void clickPeopleVerifyResultInSearchPage() {
         String expectedNameOfSearching = "\"People\"";
-        searchPage.clickPeopleBtn();
+        searchPage.clickButton(SearchPage.Button.PeopleButton);
         searchPage.peopleAvatar();
-        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Step click People dont work right");
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getButtonText(SearchPage.Button.FilteredByText)), "Step click People dont work right");
     }
 
     @Then("Author -> verify results search page")
     public void clickAuthorVerifyResultInSearchPage() {
-        searchPage.clickDiscussionsBtn();
-        searchPage.clickAuthorBtn();
+        searchPage.clickButton(SearchPage.Button.DiscussionsButton);
+        searchPage.waitButtonVisibility();
+        searchPage.clickButton(SearchPage.Button.AuthorButton);
         Assert.isTrue(searchPage.searchByAuthorBtnIsVisible(), "Step click Author dont work right");
     }
 
     @Then("Time -> verify results search page")
     public void clickTimeVerifyResultInSearchPage() {
         String expectedNameOfSearching = "\"Discussions\" and \"Last day\"";
-        searchPage.clickTimeBtn();
-        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getTextSearchingResult()), "Steps dont work right");
+        searchPage.clickButton(SearchPage.Button.TimeButton);
+        searchPage.clickButton(SearchPage.Button.DayButton);
+        Assert.isTrue(expectedNameOfSearching.equals(searchPage.getButtonText(SearchPage.Button.FilteredByText)), "Steps dont work right");
     }
 
     @When("Link thread name should be functional")
@@ -293,7 +300,7 @@ public class CommonStepDefinitions {
 
     @And("I go next page")
     public void iGoNextPage() {
-        searchPage.clickNextBtn();
+        searchPage.clickButton(SearchPage.Button.NextButton);
     }
 
     @Then("I am in page Two")
@@ -304,7 +311,7 @@ public class CommonStepDefinitions {
 
     @And("I go previous page")
     public void iGoPreviousPage() {
-        searchPage.clickPreviousBtn();
+        searchPage.clickButton(SearchPage.Button.PreviousButton);
     }
 
     @Then("I am in page One")
@@ -315,25 +322,25 @@ public class CommonStepDefinitions {
 
     @And("Link reply to work right search page")
     public void linkReplyToWorkRightSearchPage() {
-        String expectedName = searchPage.getReplyToBtnName();
-        searchPage.clickReplyToBtn();
+        String expectedName = searchPage.getButtonText(SearchPage.Button.NameReplyToButton);
+        searchPage.clickButton(SearchPage.Button.NameReplyToButton);
         Assert.isTrue(("Re: " + threadPage.getThreadName()).equals(expectedName), "ReplyTo no worked");
         driver.navigate().back();
     }
 
     @And("Link1 author name work right search page")
     public void link1AuthorNameWorkRightSearchPage() {
-        String expectedName = searchPage.getAuthorNameBtn1();
-        searchPage.clickAuthorNameBtn1();
-        String actualName = searchPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
-        searchPage.clickPopupCloseBtn();
+        String expectedName = searchPage.getButtonText(SearchPage.Button.AuthorNameButton1);
+        searchPage.clickButton(SearchPage.Button.AuthorNameButton1);
+        String actualName = searchPage.getButtonText(SearchPage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
+        searchPage.clickButton(SearchPage.Button.PopupClose);
         Assert.isTrue(expectedName.equals(actualName), "Link 1 no worked");
     }
 
     @And("Link2 author name work right search page")
     public void link2AuthorNameWorkRightSearchPage() {
-        String expectedName = searchPage.getAuthorNameBtn2();
-        searchPage.clickAuthorNameBtn2();
+        String expectedName = searchPage.getButtonText(SearchPage.Button.AuthorNameButton2);
+        searchPage.clickButton(SearchPage.Button.AuthorNameButton2);
         String actualName = profilePage.getProfileName();
         driver.navigate().back();
         Assert.isTrue(expectedName.equals(actualName), "Link 2 no worked");
@@ -409,8 +416,8 @@ public class CommonStepDefinitions {
 
     @And("Link sub community button right search page")
     public void linkSubCommunityButtonRightSearchPage() {
-        String expectedName = searchPage.getSubCommunityBtnName();
-        searchPage.clickSubCommunityBtn();
+        String expectedName = searchPage.getButtonText(SearchPage.Button.SubCommunityButton);
+        searchPage.clickButton(SearchPage.Button.SubCommunityButton);
         String actualName = communityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.navigate().back();
         Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");

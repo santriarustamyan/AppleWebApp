@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class SearchPage {
 
@@ -16,7 +18,6 @@ public class SearchPage {
     private final By searchBtnPath = By.cssSelector("[class='button button-primary search-button hide-mobile']");
     private final By filteredByTextPath = By.cssSelector("[class='filtered-by-text']");
     private final By filterBtnPath = By.cssSelector("[class='open-filters-button']");
-    private final By resetBtnPath = By.cssSelector("[class='reset-filters-button']");
     private final By discussionsBtnPath = By.cssSelector("a[data-filter-id='filterDiscussions']");
     private final By userTipsBtnPath = By.cssSelector("a[data-filter-id='filterUserTips']");
     private final By peopleBtnPath = By.cssSelector("a[data-filter-id='filterPeople']");
@@ -43,22 +44,70 @@ public class SearchPage {
     private final By popupUserNamePath = By.id("user-profile-popup-title");
     private final By popupClosePath = By.cssSelector("[class='modal-close-button']");
 
+
+    public enum Button {
+        SubCommunityButton,
+        AuthorNameButton2,
+        AuthorNameButton1,
+        PopupUserName,
+        NameReplyToButton,
+        FilteredByText,
+        UserTipsButton,
+        DiscussionsButton,
+        TimeButton,
+        DayButton,
+        IPhoneButton,
+        IPadButton,
+        CommunityButton,
+        FilterButton,
+        PeopleButton,
+        AuthorButton,
+        SearchButton,
+        NextButton,
+        PreviousButton,
+        PopupClose,
+    }
+
+    private final Map<SearchPage.Button, By> paths = new EnumMap<>(SearchPage.Button.class);
+
+    {
+        paths.put(SearchPage.Button.SubCommunityButton, subCommunityBtnPath);
+        paths.put(SearchPage.Button.AuthorNameButton2, authorNameBtn2Path);
+        paths.put(SearchPage.Button.AuthorNameButton1, authorNameBtn1Path);
+        paths.put(SearchPage.Button.PopupUserName, popupUserNamePath);
+        paths.put(SearchPage.Button.NameReplyToButton, nameReplyToBtnPath);
+        paths.put(SearchPage.Button.FilteredByText, filteredByTextPath);
+        paths.put(SearchPage.Button.UserTipsButton, userTipsBtnPath);
+        paths.put(SearchPage.Button.DiscussionsButton, discussionsBtnPath);
+        paths.put(SearchPage.Button.TimeButton, timeBtnPath);
+        paths.put(SearchPage.Button.DayButton, dayBtnPath);
+        paths.put(SearchPage.Button.IPhoneButton, iPhoneBtnPath);
+        paths.put(SearchPage.Button.IPadButton, iPadBtnPath);
+        paths.put(SearchPage.Button.CommunityButton, communityBtnPath);
+        paths.put(SearchPage.Button.FilterButton, filterBtnPath);
+        paths.put(SearchPage.Button.PeopleButton, peopleBtnPath);
+        paths.put(SearchPage.Button.AuthorButton, authorBtnPath);
+        paths.put(SearchPage.Button.SearchButton, searchBtnPath);
+        paths.put(SearchPage.Button.NextButton, nextBtnPath);
+        paths.put(SearchPage.Button.PreviousButton, previousBtnPath);
+        paths.put(SearchPage.Button.PopupClose, popupClosePath);
+    }
+
     public SearchPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    public void clickButton(Button button) {
+        wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).click();
+    }
+
+    public String getButtonText(Button button) {
+        return wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).getText();
+    }
+
     public void setSearchText() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchTextFieldPath)).sendKeys("Apple");
-    }
-
-    public void clickSearchBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(searchBtnPath)).click();
-    }
-
-    public void clickDiscussionsBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(discussionsBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath));
     }
 
     public void clickSolvedBtn() throws InterruptedException {
@@ -74,21 +123,6 @@ public class SearchPage {
         wait.until(ExpectedConditions.elementToBeClickable(unsolvedQuestionsBtnPath)).click();
     }
 
-    public void clickIPhoneBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(communityBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(iPhoneBtnPath)).click();
-    }
-
-    public void clickIpadBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(communityBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(iPadBtnPath)).click();
-    }
-
-    public void clickUserTipBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(topicHeadingPath));
-        wait.until(ExpectedConditions.elementToBeClickable(userTipsBtnPath)).click();
-    }
-
     public void clickAppleWatchBtn() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight/8)");
@@ -98,25 +132,8 @@ public class SearchPage {
         Thread.sleep(4000);
     }
 
-    public void clickFilterBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(filterBtnPath)).click();
-    }
-
-    public void clickPeopleBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(peopleBtnPath)).click();
-    }
-
-    public void clickAuthorBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(authorBtnPath)).click();
-    }
-
     public boolean searchByAuthorBtnIsVisible() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(searchByAuthorTextFieldPath)).isDisplayed();
-    }
-
-    public void clickTimeBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(timeBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(dayBtnPath)).click();
     }
 
     public void peopleAvatar() {
@@ -126,68 +143,13 @@ public class SearchPage {
         }
     }
 
-    public void clickResetBtn() {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(resetBtnPath)).click();
-        } catch (Exception ignored) {
-        }
-    }
-
-    public String getTextSearchingResult() {
-        return wait.until(ExpectedConditions.elementToBeClickable(filteredByTextPath)).getText();
-    }
-
-    public void clickNextBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(nextBtnPath)).click();
-    }
-
     public String getPageNumberName() throws InterruptedException {
         Thread.sleep(4000);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(pageNumberPath)).getText();
     }
 
-    public void clickPreviousBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(previousBtnPath)).click();
-    }
-
-    public void clickReplyToBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(nameReplyToBtnPath)).click();
-    }
-
-    public String getReplyToBtnName() {
-        return wait.until(ExpectedConditions.elementToBeClickable(nameReplyToBtnPath)).getText();
-    }
-
-    public void clickAuthorNameBtn1() {
-        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).click();
-    }
-
-    public String getAuthorNameBtn1() {
-        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).getText();
-    }
-
-    public String getPopupUserName() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(popupUserNamePath)).getText();
-    }
-
-    public void clickPopupCloseBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(popupClosePath)).click();
-    }
-
-    public void clickAuthorNameBtn2() {
-        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).click();
-    }
-
-    public String getAuthorNameBtn2() {
-        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).getText();
-    }
-
-    public void clickSubCommunityBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).click();
-    }
-
-    public String getSubCommunityBtnName() {
-        return wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).getText();
+    public void waitButtonVisibility() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(topicHeadingPath));
     }
 
 }
