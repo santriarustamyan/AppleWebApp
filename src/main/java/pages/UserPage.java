@@ -27,6 +27,10 @@ public class UserPage {
         Search,
         AskTheCommunity,
         CreateTip,
+        LoungeLibel,
+        MySubscriptions,
+        More,
+        Profile,
         Lounge
     }
 
@@ -36,22 +40,16 @@ public class UserPage {
         paths.put(Button.Search, searchBtnPath);
         paths.put(Button.AskTheCommunity, askTheCommunityBtnPath);
         paths.put(Button.CreateTip, createTipBtnPath);
-        paths.put(Button.Lounge, loungeLibelPath);
+        paths.put(Button.LoungeLibel, loungeLibelPath);
+        paths.put(Button.MySubscriptions, mySubscriptionsBtnPath);
+        paths.put(Button.More, moreBtn);
+        paths.put(Button.Profile, profileBtn);
+        paths.put(Button.Lounge, loungeBtnPath);
     }
 
     public UserPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
-
-    public boolean mySubscriptionsBtnIsDisplayed() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(profileBtn)).click();
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(mySubscriptionsBtnPath)).isDisplayed();
-    }
-
-    public void clickMySubscriptionsBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(profileBtn)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(mySubscriptionsBtnPath)).click();
     }
 
     public boolean buttonIsDisplayed(Button button) {
@@ -62,12 +60,8 @@ public class UserPage {
         }
     }
 
-    public void clickMoreBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(moreBtn)).click();
+    public void clickButton(Button button){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(paths.get(button))).click();
     }
 
-    public void clickLoungeBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(moreBtn)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(loungeBtnPath)).click();
-    }
 }

@@ -196,12 +196,14 @@ public class CommonStepDefinitions {
 
     @Then("My Subscriptions button is displayed")
     public void my_subscriptions_button_is_displayed() {
-        Assert.isTrue(userPage.mySubscriptionsBtnIsDisplayed(), "My Subscriptions button is not displayed");
+        userPage.clickButton(UserPage.Button.Profile);
+        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.MySubscriptions), "My Subscriptions button is not displayed");
     }
 
     @Then("Go in My Subscriptions")
     public void clickMySubscriptionsButton() {
-        userPage.clickMySubscriptionsBtn();
+        userPage.clickButton(UserPage.Button.Profile);
+        userPage.clickButton(UserPage.Button.MySubscriptions);
     }
 
     @Then("Profile link is a functional")
@@ -239,19 +241,20 @@ public class CommonStepDefinitions {
 
     @Then("Lounge button is displayed")
     public void lounge_button_is_displayed() {
-        userPage.clickMoreBtn();
-        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.Lounge), "Lounge button is not displayed");
+        userPage.clickButton(UserPage.Button.More);
+        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.LoungeLibel), "Lounge button is not displayed");
     }
 
     @Then("Lounge button is not displayed")
     public void lounge_button_is_not_displayed() {
-        userPage.clickMoreBtn();
-        Assert.isTrue(!userPage.buttonIsDisplayed(UserPage.Button.Lounge), "Lounge button is displayed");
+        userPage.clickButton(UserPage.Button.More);
+        Assert.isTrue(!userPage.buttonIsDisplayed(UserPage.Button.LoungeLibel), "Lounge button is displayed");
     }
 
     @Then("Access Lounge Announcements")
     public void goLoungeAnnouncements() {
-        userPage.clickLoungeBtn();
+        userPage.clickButton(UserPage.Button.More);
+        userPage.clickButton(UserPage.Button.Lounge);
     }
 
     @Then("Try Access Lounge Announcements With Link")
