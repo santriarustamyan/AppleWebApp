@@ -43,10 +43,6 @@ public class BrowsePage {
     public void clickThreadLink() {
         driver.findElement(threadNamePath).click();
     }
-    public void clickSwitchTab(int tab) {
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(tab));
-    }
 
     public String getThreadName() {
         return driver.findElement(threadNamePath).getText();

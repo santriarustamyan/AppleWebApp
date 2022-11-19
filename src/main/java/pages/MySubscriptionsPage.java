@@ -8,7 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class MySubscriptionsPage {
 
@@ -25,26 +26,60 @@ public class MySubscriptionsPage {
     private final By topicsCommunitySpanBtnPath = By.cssSelector("[data-action='topics-community'] span");
     private final By topicsThreadBtnSpanPath = By.cssSelector("[data-action='topics-thread'] span");
     private final By topicsLatestActivitySpanBtnPath = By.cssSelector("[data-action='topics-latest-activity'] span");
-    private final By peopleBtnPath = By.cssSelector("a[data-filter-id='filterPeople']");
 
+    public enum Button {
+        NameProfile,
+        FilterButton,
+        UserTipsButton,
+        TopicsCommunityButton,
+        TopicsThreadButton,
+        TopicsLatestActivityButton,
+        AuthorNameButton1,
+        FilteredByText,
+        TopicsCommunitySpanButton,
+        TopicsThreadButtonSpan,
+        TopicsLatestActivitySpanButton
+    }
+
+    private final Map<MySubscriptionsPage.Button, By> paths = new EnumMap<>(MySubscriptionsPage.Button.class);
+
+    {
+        paths.put(MySubscriptionsPage.Button.NameProfile, nameProfilePath);
+        paths.put(MySubscriptionsPage.Button.FilterButton, filterBtnPath);
+        paths.put(MySubscriptionsPage.Button.UserTipsButton, userTipsBtnPath);
+        paths.put(MySubscriptionsPage.Button.TopicsCommunityButton, topicsCommunityBtnPath);
+        paths.put(MySubscriptionsPage.Button.TopicsThreadButton, topicsThreadBtnPath);
+        paths.put(MySubscriptionsPage.Button.TopicsLatestActivityButton, topicsLatestActivityBtnPath);
+        paths.put(MySubscriptionsPage.Button.AuthorNameButton1, authorNameBtn1Path);
+        paths.put(MySubscriptionsPage.Button.FilteredByText, filteredByTextPath);
+        paths.put(MySubscriptionsPage.Button.TopicsCommunitySpanButton, topicsCommunitySpanBtnPath);
+        paths.put(MySubscriptionsPage.Button.TopicsThreadButtonSpan, topicsThreadBtnSpanPath);
+        paths.put(MySubscriptionsPage.Button.TopicsLatestActivitySpanButton, topicsLatestActivitySpanBtnPath);
+    }
 
     public MySubscriptionsPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    public void clickButton(Button button) {
+        wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).click();
+    }
+
+    public String getButtonText(Button button) {
+        return wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).getText();
+    }
+
+    public void waitButtonClickable(Button button) {
+        wait.until(ExpectedConditions.elementToBeClickable(paths.get(button)));
+    }
+
+    public String getButtonAttributeText(Button button, String nameAttribute) {
+        return wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).getAttribute(nameAttribute);
+    }
+
     private By pagePerBtnPath(String pageCount) {
         return By.cssSelector("[aria-label='" + pageCount + " per page']");
-    }
-
-    public void clickFirstProfileLink() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(nameProfilePath)).click();
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-    }
-
-    public String getProfileName() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(nameProfilePath)).getText();
     }
 
     public void checkPerPageButton(String count) {
@@ -56,50 +91,6 @@ public class MySubscriptionsPage {
         driver.navigate().to("https://discussions.apple.com/profile/" + driver.findElement(userNamePath).getText() + "/subscriptions?page=1&perPage=" + count);
         String getAttributeName = wait.until(ExpectedConditions.visibilityOfElementLocated(pagePerBtnPath(count))).getAttribute("class");
         Assert.isTrue(getAttributeName.equals(activeCountPerPagePath), "per page button no active");
-    }
-
-    public void clickFilterBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(filterBtnPath)).click();
-    }
-
-    public void clickUserTipBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(userTipsBtnPath)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(authorNameBtn1Path));
-    }
-
-    public String getTextSearchingResult() {
-        return wait.until(ExpectedConditions.elementToBeClickable(filteredByTextPath)).getText();
-    }
-
-    public void clickPeopleBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(topicsCommunityBtnPath));
-        wait.until(ExpectedConditions.elementToBeClickable(peopleBtnPath)).click();
-    }
-    public void clickTopicsCommunityBtnText() {
-        wait.until(ExpectedConditions.elementToBeClickable(topicsCommunityBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(topicsCommunityBtnPath));
-    }
-
-    public void clickTopicsThreadBtnText() {
-        wait.until(ExpectedConditions.elementToBeClickable(topicsThreadBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(topicsThreadBtnPath));
-    }
-
-    public void clickTopicsLatestActivityBtnText() {
-        wait.until(ExpectedConditions.elementToBeClickable(topicsLatestActivityBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(topicsLatestActivityBtnPath));
-    }
-
-    public String getTopicsCommunityBtnSpanText() {
-        return wait.until(ExpectedConditions.elementToBeClickable(topicsCommunitySpanBtnPath)).getAttribute("class");
-    }
-
-    public String getTopicsThreadBtnSpanText() {
-        return wait.until(ExpectedConditions.elementToBeClickable(topicsThreadBtnSpanPath)).getAttribute("class");
-    }
-
-    public String getTopicsLatestActivitySpanBtnText() {
-        return wait.until(ExpectedConditions.elementToBeClickable(topicsLatestActivitySpanBtnPath)).getAttribute("class");
     }
 
 }

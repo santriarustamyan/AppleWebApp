@@ -188,17 +188,17 @@ public class CommonStepDefinitions {
     public void linkThreadAreFunctional() {
         String expectedThreadName = browsPage.getThreadName();
         browsPage.clickThreadLink();
-        browsPage.clickSwitchTab(1);
+        homePage.clickSwitchTab(1);
         String actualTreadName = threadPage.getThreadName();
         Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is not working");
         driver.close();
-        browsPage.clickSwitchTab(0);
+        homePage.clickSwitchTab(0);
     }
 
     @Then("Go sub community page")
     public void goSubCommunityPage() {
         browsPage.clickSubCommunityBtn();
-        browsPage.clickSwitchTab(1);
+        homePage.clickSwitchTab(1);
     }
 
     @Then("My Subscriptions button is displayed")
@@ -215,8 +215,9 @@ public class CommonStepDefinitions {
 
     @Then("Profile link is a functional")
     public void profileLinkFunctional() {
-        String profileName = mySubscriptionsPage.getProfileName();
-        mySubscriptionsPage.clickFirstProfileLink();
+        String profileName = mySubscriptionsPage.getButtonText(MySubscriptionsPage.Button.NameProfile);
+        mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.NameProfile);
+        homePage.clickSwitchTab(1);
         String profilePageName = profilePage.getProfileName();
         Assert.isTrue(profileName.equals(profilePageName), "Profile link is not functional");
     }
@@ -350,47 +351,51 @@ public class CommonStepDefinitions {
     public void link2AuthorNameWorkRightBrowsePage() {
         String expectedName = browsPage.getAuthorNameBtn2();
         browsPage.clickAuthorNameBtn2();
-        browsPage.clickSwitchTab(1);
+        homePage.clickSwitchTab(1);
         String actualName = profilePage.getProfileName();
         driver.close();
-        browsPage.clickSwitchTab(0);
+        homePage.clickSwitchTab(0);
         Assert.isTrue(expectedName.equals(actualName), "Link 2 no worked");
     }
 
     @Given("I click filter button in my subscriptions page")
     public void iClickFilterButtonInMySubscriptionsPage() {
-        mySubscriptionsPage.clickFilterBtn();
+        mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.FilterButton);
     }
 
     @Then("Click user tips verify results my subscriptions page")
     public void clickUserTipsVerifyResultsMySubscriptionsPage() {
         String expectedName = "\"Content\", \"Following\" and \"User Tips\"";
-        mySubscriptionsPage.clickUserTipBtn();
-        String actualName = mySubscriptionsPage.getTextSearchingResult();
+        mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.UserTipsButton);
+        mySubscriptionsPage.waitButtonClickable(MySubscriptionsPage.Button.AuthorNameButton1);
+        String actualName = mySubscriptionsPage.getButtonText(MySubscriptionsPage.Button.FilteredByText);
         Assert.isTrue(expectedName.equals(actualName), "Filter User Tips no working");
     }
 
     @Then("Latest activity button is functional in My Subscriptions")
     public void latestActivityButtonIsFunctionalInMySubscriptions() {
         String expectedAttributeName = "icon icon-after icon-chevrondown";
-        mySubscriptionsPage.clickTopicsLatestActivityBtnText();
-        String actualAttributeName = mySubscriptionsPage.getTopicsLatestActivitySpanBtnText();
+        mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.TopicsLatestActivityButton);
+        mySubscriptionsPage.waitButtonClickable(MySubscriptionsPage.Button.TopicsLatestActivityButton);
+        String actualAttributeName = mySubscriptionsPage.getButtonAttributeText(MySubscriptionsPage.Button.TopicsLatestActivitySpanButton, "class");
         Assert.isTrue(expectedAttributeName.equals(actualAttributeName), "Activity button no functional");
     }
 
     @And("Thread button is functional in My Subscriptions")
     public void threadButtonIsFunctionalInMySubscriptions() {
         String expectedAttributeName = "icon icon-after icon-chevrondown";
-        mySubscriptionsPage.clickTopicsThreadBtnText();
-        String actualAttributeName = mySubscriptionsPage.getTopicsThreadBtnSpanText();
+        mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.TopicsThreadButton);
+        mySubscriptionsPage.waitButtonClickable(MySubscriptionsPage.Button.TopicsThreadButton);
+        String actualAttributeName = mySubscriptionsPage.getButtonAttributeText(MySubscriptionsPage.Button.TopicsThreadButtonSpan, "class");
         Assert.isTrue(expectedAttributeName.equals(actualAttributeName), "Activity button no functional");
     }
 
     @And("Community button is functional in My Subscriptions")
     public void communityButtonIsFunctionalInMySubscriptions() {
         String expectedAttributeName = "icon icon-after icon-chevrondown";
-        mySubscriptionsPage.clickTopicsCommunityBtnText();
-        String actualAttributeName = mySubscriptionsPage.getTopicsCommunityBtnSpanText();
+        mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.TopicsCommunityButton);
+        mySubscriptionsPage.waitButtonClickable(MySubscriptionsPage.Button.TopicsCommunityButton);
+        String actualAttributeName = mySubscriptionsPage.getButtonAttributeText(MySubscriptionsPage.Button.TopicsCommunitySpanButton, "class");
         Assert.isTrue(expectedAttributeName.equals(actualAttributeName), "Activity button no functional");
     }
 
@@ -407,10 +412,10 @@ public class CommonStepDefinitions {
     public void linkSubCommunityButtonRightBrowsePage() {
         String expectedName = browsPage.getSubCommunityBtnName();
         browsPage.clickSubCommunityBtn();
-        browsPage.clickSwitchTab(1);
+        homePage.clickSwitchTab(1);
         String actualName = communityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.close();
-        browsPage.clickSwitchTab(0);
+        homePage.clickSwitchTab(0);
         Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
     }
 
