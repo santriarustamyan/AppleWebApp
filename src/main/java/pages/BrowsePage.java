@@ -8,7 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class BrowsePage {
     WebDriver driver;
@@ -31,22 +32,67 @@ public class BrowsePage {
     private final By subCommunityBtnPath = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > a.community-link");
 
 
+    public enum Button {
+        SubCommunityButton,
+        AuthorNameButton2,
+        AuthorNameButton1,
+        PopupUserName,
+        FilteredByText,
+        UserTipsButton,
+        DiscussionsButton,
+        IPhoneButton,
+        IPadButton,
+        CommunityButton,
+        PopupClose,
+        SolvedQuestionsButton,
+        UnsolvedQuestionsButton,
+        ThreadName
+    }
+
+    private final Map<BrowsePage.Button, By> paths = new EnumMap<>(BrowsePage.Button.class);
+
+    {
+        paths.put(BrowsePage.Button.SubCommunityButton, subCommunityBtnPath);
+        paths.put(BrowsePage.Button.AuthorNameButton2, authorNameBtn2Path);
+        paths.put(BrowsePage.Button.AuthorNameButton1, authorNameBtn1Path);
+        paths.put(BrowsePage.Button.PopupUserName, popupUserNamePath);
+        paths.put(BrowsePage.Button.FilteredByText, filteredByTextPath);
+        paths.put(BrowsePage.Button.UserTipsButton, userTipsBtnPath);
+        paths.put(BrowsePage.Button.DiscussionsButton, discussionsBtnPath);
+        paths.put(BrowsePage.Button.IPhoneButton, iPhoneBtnPath);
+        paths.put(BrowsePage.Button.IPadButton, iPadBtnPath);
+        paths.put(BrowsePage.Button.CommunityButton, communityBtnPath);
+        paths.put(BrowsePage.Button.PopupClose, popupClosePath);
+        paths.put(BrowsePage.Button.SolvedQuestionsButton, solvedQuestionsBtnPath);
+        paths.put(BrowsePage.Button.UnsolvedQuestionsButton, unsolvedQuestionsBtnPath);
+        paths.put(BrowsePage.Button.ThreadName, threadNamePath);
+    }
+
+
     public BrowsePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+
+    public void clickButton(Button button) {
+        wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).click();
+    }
+
+    public String getButtonText(Button button) {
+        return wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).getText();
+    }
+
+
+    public void waitButtonVisibility() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(topicHeadingPath));
+    }
+
+
     private By pagePerBtnPath(String pageCount) {
         return By.cssSelector("[aria-label='" + pageCount + " per page']");
     }
 
-    public void clickThreadLink() {
-        driver.findElement(threadNamePath).click();
-    }
-
-    public String getThreadName() {
-        return driver.findElement(threadNamePath).getText();
-    }
 
     public void checkPerPageButton(String count) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -60,34 +106,6 @@ public class BrowsePage {
         Assert.isTrue(getAttributeName.equals(activeCountPerPagePath), "per page button no active");
     }
 
-    public void clickDiscussionsBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(discussionsBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath));
-    }
-
-    public void clickSolvedBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(solvedQuestionsBtnPath)).click();
-    }
-
-    public void clickUnSolvedBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(unsolvedQuestionsBtnPath)).click();
-    }
-
-    public void clickIPhoneBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(communityBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(iPhoneBtnPath)).click();
-    }
-
-    public void clickIpadBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(communityBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(iPadBtnPath)).click();
-    }
-
-    public void clickUserTipBtn() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(topicHeadingPath));
-        wait.until(ExpectedConditions.elementToBeClickable(userTipsBtnPath)).click();
-    }
-
     public void clickAppleWatchBtn() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight/8)");
@@ -95,35 +113,6 @@ public class BrowsePage {
         wait.until(ExpectedConditions.elementToBeClickable(appleWatchBtnPath)).click();
         wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath));
         Thread.sleep(4000);
-    }
-
-    public String getTextSearchingResult() {
-        return wait.until(ExpectedConditions.elementToBeClickable(filteredByTextPath)).getText();
-    }
-    public String getPopupUserName() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(popupUserNamePath)).getText();
-    }
-    public void clickPopupCloseBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(popupClosePath)).click();
-    } public String getAuthorNameBtn1() {
-        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).getText();
-    }
-    public void clickAuthorNameBtn1() {
-        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn1Path)).click();
-    }
-    public void clickAuthorNameBtn2() {
-        wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).click();
-    }
-
-    public String getAuthorNameBtn2() {
-        return wait.until(ExpectedConditions.elementToBeClickable(authorNameBtn2Path)).getText();
-    }
-    public void clickSubCommunityBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).click();
-    }
-
-    public String getSubCommunityBtnName() {
-        return wait.until(ExpectedConditions.elementToBeClickable(subCommunityBtnPath)).getText();
     }
 
 }

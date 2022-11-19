@@ -23,7 +23,7 @@ public class HomePage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-        public void clickSwitchTab(int tab) {
+    public void clickSwitchTab(int tab) {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tab));
     }

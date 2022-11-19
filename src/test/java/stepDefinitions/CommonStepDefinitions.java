@@ -115,10 +115,12 @@ public class CommonStepDefinitions {
     @Then("Discussions -> Solved -> iPhone -> verify results browse page")
     public void clickIPhoneVerifyResultInBrowsePage() {
         String expectedNameOfSearching = "\"Discussions\", \"Solved questions\" and \"iPhone\"";
-        browsPage.clickDiscussionsBtn();
-        browsPage.clickSolvedBtn();
-        browsPage.clickIPhoneBtn();
-        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getTextSearchingResult()), "Steps dont working right");
+        browsPage.clickButton(BrowsePage.Button.DiscussionsButton);
+        browsPage.waitButtonVisibility();
+        browsPage.clickButton(BrowsePage.Button.SolvedQuestionsButton);
+        browsPage.clickButton(BrowsePage.Button.CommunityButton);
+        browsPage.clickButton(BrowsePage.Button.IPhoneButton);
+        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getButtonText(BrowsePage.Button.FilteredByText)), "Steps dont working right");
     }
 
     @Then("Discussions -> UnSolved -> iPad -> verify results search page")
@@ -137,10 +139,12 @@ public class CommonStepDefinitions {
     public void clickIPadVerifyResultInBrowsePage() throws InterruptedException {
         String expectedNameOfSearching = "\"Discussions\", \"Unsolved questions\" and \"iPad\"";
         Thread.sleep(4000);
-        browsPage.clickDiscussionsBtn();
-        browsPage.clickUnSolvedBtn();
-        browsPage.clickIpadBtn();
-        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getTextSearchingResult()), "Steps dont work right");
+        browsPage.clickButton(BrowsePage.Button.DiscussionsButton);
+        browsPage.waitButtonVisibility();
+        browsPage.clickButton(BrowsePage.Button.UnsolvedQuestionsButton);
+        browsPage.clickButton(BrowsePage.Button.CommunityButton);
+        browsPage.clickButton(BrowsePage.Button.IPadButton);
+        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getButtonText(BrowsePage.Button.FilteredByText)), "Steps dont work right");
     }
 
     @Then("UserTips -> AppleWatch -> verify results search page")
@@ -155,9 +159,10 @@ public class CommonStepDefinitions {
     @Then("UserTips -> AppleWatch -> verify results browse page")
     public void clickAppleWatchVerifyResultInBrowsePage() throws InterruptedException {
         String expectedNameOfSearching = "\"User Tips\" and \"Apple Watch\"";
-        browsPage.clickUserTipBtn();
+        browsPage.waitButtonVisibility();
+        browsPage.clickButton(BrowsePage.Button.UserTipsButton);
         browsPage.clickAppleWatchBtn();
-        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getTextSearchingResult()), "Steps dont work right");
+        Assert.isTrue(expectedNameOfSearching.equals(browsPage.getButtonText(BrowsePage.Button.FilteredByText)), "Steps dont work right");
     }
 
     @Then("People -> verify results search page")
@@ -186,8 +191,8 @@ public class CommonStepDefinitions {
 
     @When("Link thread name should be functional")
     public void linkThreadAreFunctional() {
-        String expectedThreadName = browsPage.getThreadName();
-        browsPage.clickThreadLink();
+        String expectedThreadName = browsPage.getButtonText(BrowsePage.Button.ThreadName);
+        browsPage.clickButton(BrowsePage.Button.ThreadName);
         homePage.clickSwitchTab(1);
         String actualTreadName = threadPage.getThreadName();
         Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is not working");
@@ -197,7 +202,7 @@ public class CommonStepDefinitions {
 
     @Then("Go sub community page")
     public void goSubCommunityPage() {
-        browsPage.clickSubCommunityBtn();
+        browsPage.clickButton(BrowsePage.Button.SubCommunityButton);
         homePage.clickSwitchTab(1);
     }
 
@@ -349,8 +354,8 @@ public class CommonStepDefinitions {
 
     @And("Link2 author name work right browse page")
     public void link2AuthorNameWorkRightBrowsePage() {
-        String expectedName = browsPage.getAuthorNameBtn2();
-        browsPage.clickAuthorNameBtn2();
+        String expectedName = browsPage.getButtonText(BrowsePage.Button.AuthorNameButton2);
+        browsPage.clickButton(BrowsePage.Button.AuthorNameButton2);
         homePage.clickSwitchTab(1);
         String actualName = profilePage.getProfileName();
         driver.close();
@@ -401,17 +406,17 @@ public class CommonStepDefinitions {
 
     @And("Link1 author name work right browse page")
     public void linkAuthorNameWorkRightBrowsePage() {
-        String expectedName = browsPage.getAuthorNameBtn1();
-        browsPage.clickAuthorNameBtn1();
-        String actualName = browsPage.getPopupUserName().replaceFirst("User profile information for user:\n", "");
-        browsPage.clickPopupCloseBtn();
+        String expectedName = browsPage.getButtonText(BrowsePage.Button.AuthorNameButton1);
+        browsPage.clickButton(BrowsePage.Button.AuthorNameButton1);
+        String actualName = browsPage.getButtonText(BrowsePage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
+        browsPage.clickButton(BrowsePage.Button.PopupClose);
         Assert.isTrue(expectedName.equals(actualName), "Link 1 no worked");
     }
 
     @And("Link sub community button right browse page")
     public void linkSubCommunityButtonRightBrowsePage() {
-        String expectedName = browsPage.getSubCommunityBtnName();
-        browsPage.clickSubCommunityBtn();
+        String expectedName = browsPage.getButtonText(BrowsePage.Button.SubCommunityButton);
+        browsPage.clickButton(BrowsePage.Button.SubCommunityButton);
         homePage.clickSwitchTab(1);
         String actualName = communityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.close();

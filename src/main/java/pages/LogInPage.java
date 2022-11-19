@@ -27,13 +27,13 @@ public class LogInPage {
 
     public void fillInLogin(String login) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(appleIDTextFieldPath)).clear();
-        driver.findElement(appleIDTextFieldPath).sendKeys(login);
-        driver.findElement(nextBtnPath).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(appleIDTextFieldPath)).sendKeys(login);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nextBtnPath)).click();
     }
 
     public void fillInPassword(String password) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(passwordTextFieldPath)).clear();
-        driver.findElement(passwordTextFieldPath).sendKeys(password);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordTextFieldPath)).sendKeys(password);
         wait.until(ExpectedConditions.visibilityOfElementLocated(nextBtnPath)).click();
     }
 
