@@ -5,7 +5,7 @@ Feature: Search page
   Background:
 
     Given I am on the Home page
-    And I am on the Search page
+    And I am on the "Search" page
     When Fill and search
 
   @12
@@ -31,7 +31,7 @@ Feature: Search page
   @20
   Scenario: Go to Search page and search for any query and check whether pagination works
 
-    When I go next page
-    And I am in page Two
-    And I go previous page
-    Then I am in page One
+    When I go "Next" page
+    Then I should be in "Page 2"
+    And I go "Previous" page
+    Then I should be in "Page 1"

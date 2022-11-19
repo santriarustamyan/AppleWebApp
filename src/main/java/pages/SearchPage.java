@@ -66,8 +66,8 @@ public class SearchPage {
         PeopleButton,
         AuthorButton,
         SearchButton,
-        NextButton,
-        PreviousButton,
+        Next,
+        Previous,
         PopupClose,
         ThreadHeadingText,
         AskTheCommunityButton
@@ -93,8 +93,8 @@ public class SearchPage {
         paths.put(SearchPage.Button.PeopleButton, peopleBtnPath);
         paths.put(SearchPage.Button.AuthorButton, authorBtnPath);
         paths.put(SearchPage.Button.SearchButton, searchBtnPath);
-        paths.put(SearchPage.Button.NextButton, nextBtnPath);
-        paths.put(SearchPage.Button.PreviousButton, previousBtnPath);
+        paths.put(SearchPage.Button.Next, nextBtnPath);
+        paths.put(SearchPage.Button.Previous, previousBtnPath);
         paths.put(SearchPage.Button.PopupClose, popupClosePath);
         paths.put(SearchPage.Button.AskTheCommunityButton, askTheCommunityBtnPath);
         paths.put(SearchPage.Button.ThreadHeadingText, topicThreadHeadingPath);

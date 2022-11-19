@@ -4,7 +4,7 @@ Feature: Sub Community page
 
   Background:
     Given I am on the Home page
-    And I am on the Browse page
+    And I am on the "Browse" page
     Then Go sub community page
 
   @11

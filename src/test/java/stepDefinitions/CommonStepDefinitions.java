@@ -1,8 +1,8 @@
 package stepDefinitions;
 
 import classes.Requests;
+import data.Users;
 import dev.failsafe.internal.util.Assert;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -52,37 +52,42 @@ public class CommonStepDefinitions {
     public void goHomePage() {
         driver.get("https://discussions.apple.com/welcome");
         driver.manage().window().maximize();
-        homePage.clickClosePopupBtn();
+        homePage.clickButton(HomePage.Button.ClosePopUpAlert);
     }
 
-    @When("I am on the Login page")
-    public void goSignInPage() {
-        homePage.clickBtnLogIn();
+    @When("I fill L{string} Login and password")
+    public void iFillLLoginAndPassword(String levelNumber) {
+        Users data = new Users();
+        String userName = data.users.keySet().toArray()[Integer.parseInt(levelNumber)-1].toString();
+        String password = data.users.get(userName);
+        logInPage.login(userName, password);
     }
 
-    @Then("I fill L Login and password")
-    public void fillLUserData() {
-        logInPage.login("johnaug2017@outlook.com", "Password@12");
+    @And("{string} button is displayed")
+    public void buttonIsDisplayed(String buttonName) {
+        Assert.isTrue(userPage.buttonIsDisplayed(
+                UserPage.Button.valueOf(buttonName)), buttonName + " button is not displayed");
     }
 
-    @Then("I fill L5 Login and password")
-    public void fillL5UserData() {
-        logInPage.login("johnjan2017@outlook.com", "Password@12");
+    @And("{string} button is not displayed")
+    public void buttonIsNotDisplayed(String buttonName) {
+        Assert.isTrue(!userPage.buttonIsDisplayed(
+                UserPage.Button.valueOf(buttonName)), buttonName + " button is displayed");
     }
 
-    @Then("I fill L6 Login and password")
-    public void fillL6UserData() {
-        logInPage.login("apple.asc003+100@gmail.com", "Hampshire@123");
+    @And("I am on the {string} page")
+    public void iAmOnThePage(String buttonName) {
+        homePage.clickButton(HomePage.Button.valueOf(buttonName));
     }
 
-    @When("I am on the Browse page")
-    public void goBrowsePage() {
-        homePage.clickBtnBrows();
+    @Then("Per pages {string} should be functional in Browse page")
+    public void perPagesShouldBeFunctionalInBrowsePage(String countPage) {
+        browsPage.checkPerPageButton(countPage);
     }
 
-    @When("I am on the Search page")
-    public void goSearchPage() {
-        homePage.clickBtnSearch();
+    @Then("Per pages {string} should be functional in My Subscriptions")
+    public void perPagesShouldBeFunctionalInMySubscriptions(String countPage) {
+        mySubscriptionsPage.checkPerPageButton(countPage);
     }
 
     @When("Fill and search")
@@ -98,7 +103,7 @@ public class CommonStepDefinitions {
 
     @When("I click filter button in browse page")
     public void clickFilterInBrowsePage() {
-        searchPage.clickButton(SearchPage.Button.FilterButton);
+        browsPage.clickButton(BrowsePage.Button.FilterButton);
     }
 
     @Then("Discussions -> Solved -> iPhone -> verify results search page")
@@ -193,17 +198,17 @@ public class CommonStepDefinitions {
     public void linkThreadAreFunctional() {
         String expectedThreadName = browsPage.getButtonText(BrowsePage.Button.ThreadName);
         browsPage.clickButton(BrowsePage.Button.ThreadName);
-        homePage.clickSwitchTab(1);
+        homePage.switchTab(1);
         String actualTreadName = threadPage.getThreadName();
         Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is not working");
         driver.close();
-        homePage.clickSwitchTab(0);
+        homePage.switchTab(0);
     }
 
     @Then("Go sub community page")
     public void goSubCommunityPage() {
         browsPage.clickButton(BrowsePage.Button.SubCommunityButton);
-        homePage.clickSwitchTab(1);
+        homePage.switchTab(1);
     }
 
     @Then("My Subscriptions button is displayed")
@@ -222,46 +227,9 @@ public class CommonStepDefinitions {
     public void profileLinkFunctional() {
         String profileName = mySubscriptionsPage.getButtonText(MySubscriptionsPage.Button.NameProfile);
         mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.NameProfile);
-        homePage.clickSwitchTab(1);
+        homePage.switchTab(1);
         String profilePageName = profilePage.getProfileName();
         Assert.isTrue(profileName.equals(profilePageName), "Profile link is not functional");
-    }
-
-    @Then("Browse button is displayed")
-    public void browse_button_is_displayed() {
-        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.Browse), "Browse button is not displayed");
-    }
-
-    @Then("Search button is displayed")
-    public void search_button_is_displayed() {
-        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.Search), "Search button is not displayed");
-    }
-
-    @Then("Ask the Community button is displayed")
-    public void post_question_button_is_displayed() {
-        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.AskTheCommunity), "Post Question button is not displayed");
-    }
-
-    @Then("Post User Tip button is displayed")
-    public void post_user_tip_button_is_displayed() {
-        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.CreateTip), "Post User Tip button is not displayed");
-    }
-
-    @Then("Post User Tip button is not displayed")
-    public void post_user_tip_button_is_not_displayed() {
-        Assert.isTrue(!userPage.buttonIsDisplayed(UserPage.Button.CreateTip), "Post User Tip button is displayed");
-    }
-
-    @Then("Lounge button is displayed")
-    public void lounge_button_is_displayed() {
-        userPage.clickButton(UserPage.Button.More);
-        Assert.isTrue(userPage.buttonIsDisplayed(UserPage.Button.LoungeLibel), "Lounge button is not displayed");
-    }
-
-    @Then("Lounge button is not displayed")
-    public void lounge_button_is_not_displayed() {
-        userPage.clickButton(UserPage.Button.More);
-        Assert.isTrue(!userPage.buttonIsDisplayed(UserPage.Button.LoungeLibel), "Lounge button is displayed");
     }
 
     @Then("Access Lounge Announcements")
@@ -276,26 +244,6 @@ public class CommonStepDefinitions {
         Assert.isTrue(statusCode == 404, "Page is accessible");
     }
 
-    @Then("Per pages 20 should be functional in Browse page")
-    public void check20PerPageBrowse() {
-        browsPage.checkPerPageButton("20");
-    }
-
-    @Then("Per pages 60 should be functional in Browse page")
-    public void check60PerPageBrowse() {
-        browsPage.checkPerPageButton("60");
-    }
-
-    @Then("Per pages 20 should be functional in My Subscriptions")
-    public void check20PerPageMySubscriptions() {
-        mySubscriptionsPage.checkPerPageButton("20");
-    }
-
-    @Then("Per pages 60 should be functional in My Subscriptions")
-    public void check60PerPageMySubscriptions() {
-        mySubscriptionsPage.checkPerPageButton("60");
-    }
-
     @Then("Try Access User Tip With Link")
     public void TryFindUserTipWithLink() {
         driver.get("https://discussions.apple.com/post/userTip");
@@ -304,26 +252,14 @@ public class CommonStepDefinitions {
         Assert.isTrue(currentTitle.equals(expectedTitle), "Page is accessible");
     }
 
-    @And("I go next page")
-    public void iGoNextPage() {
-        searchPage.clickButton(SearchPage.Button.NextButton);
+    @When("I go {string} page")
+    public void iGoPage(String buttonName) {
+        searchPage.clickButton(SearchPage.Button.valueOf(buttonName));
     }
 
-    @Then("I am in page Two")
-    public void iAmInPageTwo() throws InterruptedException {
-        String pageNumberName = "Page 2";
-        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()), "Button next no working");
-    }
-
-    @And("I go previous page")
-    public void iGoPreviousPage() {
-        searchPage.clickButton(SearchPage.Button.PreviousButton);
-    }
-
-    @Then("I am in page One")
-    public void iAmInPageOne() throws InterruptedException {
-        String pageNumberName = "Page 1";
-        Assert.isTrue(pageNumberName.equals(searchPage.getPageNumberName()), "Previous next no working");
+    @Then("I should be in {string}")
+    public void iShouldBeIn(String pageName) throws InterruptedException {
+        Assert.isTrue(pageName.equals(searchPage.getPageNumberName()), "Button no working");
     }
 
     @And("Link reply to work right search page")
@@ -356,10 +292,10 @@ public class CommonStepDefinitions {
     public void link2AuthorNameWorkRightBrowsePage() {
         String expectedName = browsPage.getButtonText(BrowsePage.Button.AuthorNameButton2);
         browsPage.clickButton(BrowsePage.Button.AuthorNameButton2);
-        homePage.clickSwitchTab(1);
+        homePage.switchTab(1);
         String actualName = profilePage.getProfileName();
         driver.close();
-        homePage.clickSwitchTab(0);
+        homePage.switchTab(0);
         Assert.isTrue(expectedName.equals(actualName), "Link 2 no worked");
     }
 
@@ -417,10 +353,10 @@ public class CommonStepDefinitions {
     public void linkSubCommunityButtonRightBrowsePage() {
         String expectedName = browsPage.getButtonText(BrowsePage.Button.SubCommunityButton);
         browsPage.clickButton(BrowsePage.Button.SubCommunityButton);
-        homePage.clickSwitchTab(1);
+        homePage.switchTab(1);
         String actualName = subCommunityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.close();
-        homePage.clickSwitchTab(0);
+        homePage.switchTab(0);
         Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
     }
 
@@ -468,30 +404,28 @@ public class CommonStepDefinitions {
 
     @Then("Search text is functional on search page")
     public void searchTextIsFunctionalOnSearchPage() {
-        homePage.clickBtnSearch();
+        homePage.clickButton(HomePage.Button.Search);
         searchPage.setSearchText("Apple");
         searchPage.clickButton(SearchPage.Button.SearchButton);
         Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.AskTheCommunityButton), "Ask The Community button is not displayed");
         Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.ThreadHeadingText), "Thread is not displayed");
-
-
     }
 
     @Then("Search text is functional on sub community page")
     public void searchTextIsFunctionalOnSubCommunityPage() {
-        homePage.clickBtnBrows();
+        homePage.clickButton(HomePage.Button.Browse);
         browsPage.clickButton(BrowsePage.Button.SubCommunityButton);
-        homePage.clickSwitchTab(1);
+        homePage.switchTab(1);
         subCommunityPage.setSearchTextInput("Apple");
         Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.AskTheCommunityButton), "Ask The Community button is not displayed");
         Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.ThreadHeadingText), "Thread is not displayed");
     }
 
 
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
+//    @After
+//    public void tearDown() {
+//        driver.quit();
+//    }
 
 
 }

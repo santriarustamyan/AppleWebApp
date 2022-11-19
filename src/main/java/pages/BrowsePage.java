@@ -30,6 +30,7 @@ public class BrowsePage {
     private final By popupClosePath = By.cssSelector("[class='modal-close-button']");
     private final By authorNameBtn2Path = By.cssSelector("tr:nth-child(2) > td.topics-table-row-latest-activity > div > a.author");
     private final By subCommunityBtnPath = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > a.community-link");
+    private final By filterBtnPath = By.cssSelector("[class='open-filters-button']");
 
 
     public enum Button {
@@ -46,26 +47,28 @@ public class BrowsePage {
         PopupClose,
         SolvedQuestionsButton,
         UnsolvedQuestionsButton,
-        ThreadName
+        ThreadName,
+        FilterButton
     }
 
     private final Map<BrowsePage.Button, By> paths = new EnumMap<>(BrowsePage.Button.class);
 
     {
-        paths.put(BrowsePage.Button.SubCommunityButton, subCommunityBtnPath);
-        paths.put(BrowsePage.Button.AuthorNameButton2, authorNameBtn2Path);
-        paths.put(BrowsePage.Button.AuthorNameButton1, authorNameBtn1Path);
-        paths.put(BrowsePage.Button.PopupUserName, popupUserNamePath);
-        paths.put(BrowsePage.Button.FilteredByText, filteredByTextPath);
-        paths.put(BrowsePage.Button.UserTipsButton, userTipsBtnPath);
-        paths.put(BrowsePage.Button.DiscussionsButton, discussionsBtnPath);
-        paths.put(BrowsePage.Button.IPhoneButton, iPhoneBtnPath);
-        paths.put(BrowsePage.Button.IPadButton, iPadBtnPath);
-        paths.put(BrowsePage.Button.CommunityButton, communityBtnPath);
-        paths.put(BrowsePage.Button.PopupClose, popupClosePath);
-        paths.put(BrowsePage.Button.SolvedQuestionsButton, solvedQuestionsBtnPath);
-        paths.put(BrowsePage.Button.UnsolvedQuestionsButton, unsolvedQuestionsBtnPath);
-        paths.put(BrowsePage.Button.ThreadName, threadNamePath);
+        paths.put(Button.SubCommunityButton, subCommunityBtnPath);
+        paths.put(Button.AuthorNameButton2, authorNameBtn2Path);
+        paths.put(Button.AuthorNameButton1, authorNameBtn1Path);
+        paths.put(Button.PopupUserName, popupUserNamePath);
+        paths.put(Button.FilteredByText, filteredByTextPath);
+        paths.put(Button.UserTipsButton, userTipsBtnPath);
+        paths.put(Button.DiscussionsButton, discussionsBtnPath);
+        paths.put(Button.IPhoneButton, iPhoneBtnPath);
+        paths.put(Button.IPadButton, iPadBtnPath);
+        paths.put(Button.CommunityButton, communityBtnPath);
+        paths.put(Button.PopupClose, popupClosePath);
+        paths.put(Button.SolvedQuestionsButton, solvedQuestionsBtnPath);
+        paths.put(Button.UnsolvedQuestionsButton, unsolvedQuestionsBtnPath);
+        paths.put(Button.ThreadName, threadNamePath);
+        paths.put(Button.FilterButton, filterBtnPath);
     }
 
 
