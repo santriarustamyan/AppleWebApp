@@ -27,7 +27,7 @@ public class CommonStepDefinitions {
     MySubscriptionsPage mySubscriptionsPage;
     ProfilePage profilePage;
     SearchPage searchPage;
-    SubCommunityPage communityPage;
+    SubCommunityPage subCommunityPage;
 
 
     @Before
@@ -45,7 +45,7 @@ public class CommonStepDefinitions {
         mySubscriptionsPage = new MySubscriptionsPage(driver);
         profilePage = new ProfilePage(driver);
         searchPage = new SearchPage(driver);
-        communityPage = new SubCommunityPage(driver);
+        subCommunityPage = new SubCommunityPage(driver);
     }
 
     @Given("I am on the Home page")
@@ -87,7 +87,7 @@ public class CommonStepDefinitions {
 
     @When("Fill and search")
     public void fillAndSearch() {
-        searchPage.setSearchText();
+        searchPage.setSearchText("Apple");
         searchPage.clickButton(SearchPage.Button.SearchButton);
     }
 
@@ -418,7 +418,7 @@ public class CommonStepDefinitions {
         String expectedName = browsPage.getButtonText(BrowsePage.Button.SubCommunityButton);
         browsPage.clickButton(BrowsePage.Button.SubCommunityButton);
         homePage.clickSwitchTab(1);
-        String actualName = communityPage.getButtonText(SubCommunityPage.Button.CommunityName);
+        String actualName = subCommunityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.close();
         homePage.clickSwitchTab(0);
         Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
@@ -428,39 +428,70 @@ public class CommonStepDefinitions {
     public void linkSubCommunityButtonRightSearchPage() {
         String expectedName = searchPage.getButtonText(SearchPage.Button.SubCommunityButton);
         searchPage.clickButton(SearchPage.Button.SubCommunityButton);
-        String actualName = communityPage.getButtonText(SubCommunityPage.Button.CommunityName);
+        String actualName = subCommunityPage.getButtonText(SubCommunityPage.Button.CommunityName);
         driver.navigate().back();
         Assert.isTrue(expectedName.equals(actualName), "Link Sub Community In no worked");
     }
 
     @And("Link name author is functional sub community page")
     public void linkNameAuthorClickIsFunctionalSubCommunityPage() {
-        String expectedName = communityPage.getButtonText(SubCommunityPage.Button.AuthorName);
-        communityPage.clickButton(SubCommunityPage.Button.AuthorName);
-        String actualName = communityPage.getButtonText(SubCommunityPage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
-        communityPage.clickButton(SubCommunityPage.Button.PopupClose);
+        String expectedName = subCommunityPage.getButtonText(SubCommunityPage.Button.AuthorName);
+        subCommunityPage.clickButton(SubCommunityPage.Button.AuthorName);
+        String actualName = subCommunityPage.getButtonText(SubCommunityPage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
+        subCommunityPage.clickButton(SubCommunityPage.Button.PopupClose);
         Assert.isTrue(expectedName.equals(actualName), "Link author name no worked");
     }
 
     @Then("Link icon author is functional sub community page")
     public void linkIconAuthorClickIsFunctionalSubCommunityPage() {
-        String expectedName = communityPage.getButtonText(SubCommunityPage.Button.AuthorName);
-        communityPage.clickButton(SubCommunityPage.Button.AuthorIcon);
-        String actualName = communityPage.getButtonText(SubCommunityPage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
-        communityPage.clickButton(SubCommunityPage.Button.PopupClose);
+        String expectedName = subCommunityPage.getButtonText(SubCommunityPage.Button.AuthorName);
+        subCommunityPage.clickButton(SubCommunityPage.Button.AuthorIcon);
+        String actualName = subCommunityPage.getButtonText(SubCommunityPage.Button.PopupUserName).replaceFirst("User profile information for user:\n", "");
+        subCommunityPage.clickButton(SubCommunityPage.Button.PopupClose);
         Assert.isTrue(expectedName.equals(actualName), "Link icon no worked");
     }
 
     @Then("Link thread name is functional sub community page")
     public void linkThreadNameIsFunctionalSubCommunityPage() {
-        String expectedThreadName = communityPage.getButtonText(SubCommunityPage.Button.ThreadName);
-        communityPage.clickButton(SubCommunityPage.Button.ThreadName);
+        String expectedThreadName = subCommunityPage.getButtonText(SubCommunityPage.Button.ThreadName);
+        subCommunityPage.clickButton(SubCommunityPage.Button.ThreadName);
         String actualTreadName = threadPage.getThreadName();
         Assert.isTrue(actualTreadName.equals(expectedThreadName), "Link is no functional");
     }
+
+    @Then("Search text is functional on home page")
+    public void searchTextIsFunctionalOnHomePage() {
+        homePage.setSearchTextInput("Apple");
+        Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.AskTheCommunityButton), "Ask The Community button is not displayed");
+        Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.ThreadHeadingText), "Thread is not displayed");
+    }
+
+    @Then("Search text is functional on search page")
+    public void searchTextIsFunctionalOnSearchPage() {
+        homePage.clickBtnSearch();
+        searchPage.setSearchText("Apple");
+        searchPage.clickButton(SearchPage.Button.SearchButton);
+        Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.AskTheCommunityButton), "Ask The Community button is not displayed");
+        Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.ThreadHeadingText), "Thread is not displayed");
+
+
+    }
+
+    @Then("Search text is functional on sub community page")
+    public void searchTextIsFunctionalOnSubCommunityPage() {
+        homePage.clickBtnBrows();
+        browsPage.clickButton(BrowsePage.Button.SubCommunityButton);
+        homePage.clickSwitchTab(1);
+        subCommunityPage.setSearchTextInput("Apple");
+        Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.AskTheCommunityButton), "Ask The Community button is not displayed");
+        Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.ThreadHeadingText), "Thread is not displayed");
+    }
+
 
     @After
     public void tearDown() {
         driver.quit();
     }
+
+
 }

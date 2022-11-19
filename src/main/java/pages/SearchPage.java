@@ -31,7 +31,7 @@ public class SearchPage {
     private final By authorBtnPath = By.cssSelector("[data-filter-group-id='author']");
     private final By timeBtnPath = By.cssSelector("[data-filter-group-id='time']");
     private final By dayBtnPath = By.cssSelector("a[data-filter-id='day']");
-    private final By topicHeadingPath = By.cssSelector("[class='topics-heading']");
+    private final By topicThreadHeadingPath = By.cssSelector("[class='topics-heading']");
     private final By peopleAvatarPath = By.cssSelector("[class='post-author-profile author-user']");
     private final By searchByAuthorTextFieldPath = By.cssSelector("[aria-label='Search by author']");
     private final By nextBtnPath = By.cssSelector("[class='next-page icon icon-standalone icon-chevronright']");
@@ -43,6 +43,9 @@ public class SearchPage {
     private final By authorNameBtn1Path = By.cssSelector("tr:nth-child(2) > th > article > div.topic-meta > [data-action='topic-author']");
     private final By popupUserNamePath = By.id("user-profile-popup-title");
     private final By popupClosePath = By.cssSelector("[class='modal-close-button']");
+    private final By askTheCommunityBtnPath = By.cssSelector("[data-action='search-ask-community']");
+
+
 
 
     public enum Button {
@@ -66,6 +69,8 @@ public class SearchPage {
         NextButton,
         PreviousButton,
         PopupClose,
+        ThreadHeadingText,
+        AskTheCommunityButton
     }
 
     private final Map<SearchPage.Button, By> paths = new EnumMap<>(SearchPage.Button.class);
@@ -91,6 +96,9 @@ public class SearchPage {
         paths.put(SearchPage.Button.NextButton, nextBtnPath);
         paths.put(SearchPage.Button.PreviousButton, previousBtnPath);
         paths.put(SearchPage.Button.PopupClose, popupClosePath);
+        paths.put(SearchPage.Button.AskTheCommunityButton, askTheCommunityBtnPath);
+        paths.put(SearchPage.Button.ThreadHeadingText, topicThreadHeadingPath);
+
     }
 
     public SearchPage(WebDriver driver) {
@@ -106,8 +114,16 @@ public class SearchPage {
         return wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).getText();
     }
 
-    public void setSearchText() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(searchTextFieldPath)).sendKeys("Apple");
+    public void setSearchText(String searchText) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchTextFieldPath)).sendKeys(searchText);
+    }
+
+    public boolean buttonIsDisplayed(SearchPage.Button button) {
+        try {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(paths.get(button))).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void clickSolvedBtn() throws InterruptedException {
@@ -128,7 +144,7 @@ public class SearchPage {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight/8)");
         Thread.sleep(4000);
         wait.until(ExpectedConditions.elementToBeClickable(appleWatchBtnPath)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(topicHeadingPath));
+        wait.until(ExpectedConditions.elementToBeClickable(topicThreadHeadingPath));
         Thread.sleep(4000);
     }
 
@@ -149,7 +165,7 @@ public class SearchPage {
     }
 
     public void waitButtonVisibility() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(topicHeadingPath));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(topicThreadHeadingPath));
     }
 
 }

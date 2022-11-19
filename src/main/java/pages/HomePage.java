@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,6 +18,7 @@ public class HomePage {
     private final By browseBtnPath = By.cssSelector("[class='localnav-menu-link'][href='/browse']");
     private final By searchBtnPath = By.cssSelector("[class='localnav-menu-link'][href='/search']");
     private final By closePopUpAlertPath = By.cssSelector("[class='icon icon-close close-notificaiton']");
+    private final By searchInputTextFieldPath = By.id("askaquestion");
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -40,11 +42,18 @@ public class HomePage {
         wait.until(ExpectedConditions.elementToBeClickable(searchBtnPath)).click();
     }
 
+    public void setSearchTextInput(String searchText) {
+        wait.until(ExpectedConditions.elementToBeClickable(searchInputTextFieldPath)).sendKeys(searchText);
+        wait.until(ExpectedConditions.elementToBeClickable(searchInputTextFieldPath)).sendKeys(Keys.ENTER);
+    }
+
     public void clickClosePopupBtn() {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(closePopUpAlertPath)).click();
         } catch (Exception ignored) {
         }
     }
+
+
 }
 

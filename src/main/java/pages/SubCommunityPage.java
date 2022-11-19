@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,6 +19,7 @@ public class SubCommunityPage {
     private final By popupUserNamePath = By.id("user-profile-popup-title");
     private final By popupClosePath = By.cssSelector(" div:nth-child(19) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2) > span:nth-child(1)");
     private final By threadNamePath = By.id("community-post-0-title");
+    private final By searchInputTextFieldPath = By.id("askaquestion");
 
     public enum Button {
         CommunityName,
@@ -51,6 +53,11 @@ public class SubCommunityPage {
 
     public void clickButton(Button button) {
         wait.until(ExpectedConditions.elementToBeClickable(paths.get(button))).click();
+    }
+
+    public void setSearchTextInput(String searchText) {
+        wait.until(ExpectedConditions.elementToBeClickable(searchInputTextFieldPath)).sendKeys(searchText);
+        wait.until(ExpectedConditions.elementToBeClickable(searchInputTextFieldPath)).sendKeys(Keys.ENTER);
     }
 
 }
