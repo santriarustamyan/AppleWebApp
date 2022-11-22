@@ -3,6 +3,7 @@ package stepDefinitions;
 import classes.Requests;
 import data.Users;
 import dev.failsafe.internal.util.Assert;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -421,11 +422,9 @@ public class CommonStepDefinitions {
         Assert.isTrue(searchPage.buttonIsDisplayed(SearchPage.Button.ThreadHeadingText), "Thread is not displayed");
     }
 
-
-//    @After
-//    public void tearDown() {
-//        driver.quit();
-//    }
-
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
 
 }
