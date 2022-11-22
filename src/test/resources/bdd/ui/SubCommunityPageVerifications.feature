@@ -7,7 +7,7 @@ Feature: Sub Community page
     And I am on the "Browse" page
     Then Go sub community page
 
-  @11
+  @14
   Scenario: Go to sub community page and check whether All clickable links
 
     Then Link icon author is functional sub community page
