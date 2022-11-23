@@ -8,9 +8,10 @@ import pages.*;
 
 public class MySubsPageStepDefinitions {
 
-    HomePage homePage;
-    MySubscriptionsPage mySubscriptionsPage;
-    ProfilePage profilePage;
+    HomePage homePage = CommonStepDefinitions.homePage;
+    MySubscriptionsPage mySubscriptionsPage = CommonStepDefinitions.mySubscriptionsPage;
+    ProfilePage profilePage = CommonStepDefinitions.profilePage;
+
     @Given("I click filter button in my subscriptions page")
     public void iClickFilterButtonInMySubscriptionsPage() {
         mySubscriptionsPage.clickButton(MySubscriptionsPage.Button.FilterButton);

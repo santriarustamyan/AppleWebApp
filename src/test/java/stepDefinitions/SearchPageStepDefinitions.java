@@ -8,11 +8,11 @@ import org.openqa.selenium.WebDriver;
 import pages.*;
 
 public class SearchPageStepDefinitions {
-    WebDriver driver;
-    SearchPage searchPage;
-    SubCommunityPage subCommunityPage;
-    ThreadPage threadPage;
-    ProfilePage profilePage;
+    WebDriver driver = CommonStepDefinitions.driver;
+    SearchPage searchPage = CommonStepDefinitions.searchPage;
+    SubCommunityPage subCommunityPage = CommonStepDefinitions.subCommunityPage;
+    ThreadPage threadPage = CommonStepDefinitions.threadPage;
+    ProfilePage profilePage = CommonStepDefinitions.profilePage;
 
     @When("I click filter button in search page")
     public void clickFilterInSearchPage() {

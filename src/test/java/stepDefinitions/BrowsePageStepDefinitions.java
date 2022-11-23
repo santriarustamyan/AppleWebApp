@@ -9,13 +9,12 @@ import pages.*;
 
 public class BrowsePageStepDefinitions {
 
-    WebDriver driver;
-    HomePage homePage;
-    BrowsePage browsePage;
-    ThreadPage threadPage;
-    ProfilePage profilePage;
-    SubCommunityPage subCommunityPage;
-
+    WebDriver driver = CommonStepDefinitions.driver;
+    HomePage homePage = CommonStepDefinitions.homePage;
+    BrowsePage browsePage = CommonStepDefinitions.browsePage;
+    ThreadPage threadPage = CommonStepDefinitions.threadPage;
+    ProfilePage profilePage = CommonStepDefinitions.profilePage;
+    SubCommunityPage subCommunityPage = CommonStepDefinitions.subCommunityPage;
 
     @Then("Per pages {string} should be functional in Browse page")
     public void perPagesShouldBeFunctionalInBrowsePage(String countPage) {

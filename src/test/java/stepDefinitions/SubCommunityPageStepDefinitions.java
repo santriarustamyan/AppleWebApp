@@ -8,8 +8,8 @@ import pages.ThreadPage;
 
 public class SubCommunityPageStepDefinitions {
 
-    SubCommunityPage subCommunityPage;
-    ThreadPage threadPage;
+   SubCommunityPage subCommunityPage = CommonStepDefinitions.subCommunityPage;
+    ThreadPage threadPage = CommonStepDefinitions.threadPage;
     @And("Link name author is functional sub community page")
     public void linkNameAuthorClickIsFunctionalSubCommunityPage() {
         String expectedName = subCommunityPage.getButtonText(SubCommunityPage.Button.AuthorName);

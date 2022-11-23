@@ -5,7 +5,7 @@ Feature: My Subscriptions page
 
   Background:
     Given I am on the Home page
-    When I am on the "Login" page
+    When I am on the "LogIn" page
     And I fill L"4" Login and password
     Then Go in My Subscriptions
 

@@ -8,10 +8,10 @@ import pages.SearchPage;
 import pages.SubCommunityPage;
 
 public class HomePageStepDefinitions {
-    HomePage homePage;
-    SearchPage searchPage;
-    BrowsePage browsePage;
-    SubCommunityPage subCommunityPage;
+    HomePage homePage = CommonStepDefinitions.homePage;
+    SearchPage searchPage = CommonStepDefinitions.searchPage;
+    BrowsePage browsePage = CommonStepDefinitions.browsePage;
+    SubCommunityPage subCommunityPage = CommonStepDefinitions.subCommunityPage;
 
     @Then("Search text is functional on home page")
     public void searchTextIsFunctionalOnHomePage() {
