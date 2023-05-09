@@ -32,8 +32,10 @@ public class CommonStepDefinitions {
 
     @Before
     public void setUp() {
+        ChromeOptions co = new ChromeOptions();
+        co.addArguments("--remote-allow-origins=*");
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(co);
         homePage = new HomePage(driver);
         logInPage = new LogInPage(driver);
         browsePage = new BrowsePage(driver);
